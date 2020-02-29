@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MobileWei</string>
+    <string name="app_name">手机卫士</string>
+    <string name="check_version_url">http://192.168.2.140:8080/mobile_safe_version_info.text</string>
 </resources>
