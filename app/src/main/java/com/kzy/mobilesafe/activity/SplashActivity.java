@@ -1,14 +1,24 @@
 package com.kzy.mobilesafe.activity;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,12 +33,16 @@ import com.kzy.mobilesafe.utils.StreamUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SplashActivity extends BaseActivity {
 
@@ -36,6 +50,7 @@ public class SplashActivity extends BaseActivity {
     private TextView mTvVersionName;
     private TextView mTvVersionCode;
     private static final int GETCODESUCCESS=200;
+    private static final int DOWNSUCCESS = 202;
     private static final int ERROR404=404;
     private static final int ERROR500=500;
     private static final int URLERROR=10089;
@@ -43,6 +58,7 @@ public class SplashActivity extends BaseActivity {
     private static final int JSONERROR=10091;
     private int mVersionCode;
     private long mStartTime;
+    private Timer mInstallTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +68,7 @@ public class SplashActivity extends BaseActivity {
         initAnimation();
         initData();
         initEvent();
+        requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE","android.permission.READ_EXTERNAL_STORAGE"},100);
     }
 
     private void initAnimation() {
@@ -100,12 +117,17 @@ public class SplashActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
+                case DOWNSUCCESS:
+                    String  path = (String) msg.obj;
+                    Log.d("tagtag","下载成功:"+path);
+                    Toast.makeText(SplashActivity.this,"下载成功:"+path,Toast.LENGTH_SHORT).show();
+                    installApk(path);
+                    break;
                 case GETCODESUCCESS:
                     VersionInfo versionInfo = (VersionInfo) msg.obj;
                     int versionCode = versionInfo.getVersionCode();
                     if (versionCode>mVersionCode){
                         //有新版本，提示去下载
-                        Toast.makeText(SplashActivity.this,"有新版本，提示去下载",Toast.LENGTH_SHORT).show();
                         showTipUpdateVersion(versionInfo);
                     }else {
                         //goHome
@@ -140,6 +162,83 @@ public class SplashActivity extends BaseActivity {
     };
 
 
+    /**
+     * 安装apk
+     * @param path 文件路径，不能是应用的私有文件里，否则其他应用不能访问就安装不了了
+     */
+    private void installApk(String path) {
+        /*
+            PackageInstallerActivity
+           <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+            </intent-filter>
+         */
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        File apkFile = new File(path);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri uri = FileProvider.getUriForFile(this, "com.kzy.mobilesafe.fileProvider", apkFile);
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        } else {
+            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        }
+        startActivity(intent);
+        startInstallTimer();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("tagtag","onResume");
+        mActivityState=ActivityState.onResume;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("tagtag","onPause");
+        mActivityState=ActivityState.onPause;
+    }
+
+    enum ActivityState{
+        onResume,onPause;
+    }
+    ActivityState mActivityState;
+
+    private void startInstallTimer(){
+        mInstallTimer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                //判断当前APP是否在前台
+                if (ActivityState.onResume==mActivityState){
+                    Log.d("tagtag","currentThread:"+Thread.currentThread().getName());
+                    goHome();
+                }
+            }
+        };
+        mInstallTimer.schedule(timerTask,1000,200);
+    }
+
+    private void stopInstallTimer() {
+        if (mInstallTimer != null) {
+            mInstallTimer.cancel();
+            mInstallTimer = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopInstallTimer();
+    }
+
     private void showTipUpdateVersion(final VersionInfo versionInfo) {
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
         ab.setTitle("版本更新提示")
@@ -164,8 +263,48 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-    private void downLoadNewApp(String url) {
-
+    private void downLoadNewApp(final String path) {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                File saveFile = new File(Environment.getExternalStorageDirectory().getPath()+"/new.apk");
+                if (saveFile.exists()){
+                    saveFile.delete();
+                }
+                Message message = mHandler.obtainMessage();
+                try {
+                    URL url = new URL(path);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setConnectTimeout(5000);
+                    conn.setRequestMethod("GET");
+                    int code = conn.getResponseCode();
+                    if (code==200){
+                        InputStream in = conn.getInputStream();
+                        FileOutputStream out = new FileOutputStream(saveFile);
+                        byte[] buf = new byte[1024];
+                        int len;
+                        while ((len=in.read(buf))>0){
+                            out.write(buf,0,len);
+                        }
+                        out.close();
+                        in.close();
+                        message.what = DOWNSUCCESS;
+                        message.obj = saveFile.getAbsolutePath();
+                    }else {
+                        message.what = code;
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    message.what = URLERROR;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    message.what = IOERROR;
+                }finally {
+                    mHandler.sendMessage(message);
+                }
+            }
+        }.start();
 
     }
 
