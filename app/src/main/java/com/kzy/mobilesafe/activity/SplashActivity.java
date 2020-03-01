@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +60,7 @@ public class SplashActivity extends BaseActivity {
     private int mVersionCode;
     private long mStartTime;
     private Timer mInstallTimer;
+    private static final int FILENOTFOUNDERROR = 10092;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +154,10 @@ public class SplashActivity extends BaseActivity {
                     break;
                 case JSONERROR:
                     Toast.makeText(SplashActivity.this,"文件解析异常",Toast.LENGTH_SHORT).show();
+                    goHome();
+                    break;
+                case FILENOTFOUNDERROR:
+                    Toast.makeText(SplashActivity.this,"文件找不到或没权限",Toast.LENGTH_SHORT).show();
                     goHome();
                     break;
                 default:
@@ -297,6 +303,9 @@ public class SplashActivity extends BaseActivity {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     message.what = URLERROR;
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+                    message.what = FILENOTFOUNDERROR;
                 } catch (IOException e) {
                     e.printStackTrace();
                     message.what = IOERROR;
@@ -336,6 +345,9 @@ public class SplashActivity extends BaseActivity {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     message.what = URLERROR;
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+                    message.what = FILENOTFOUNDERROR;
                 } catch (IOException e) {
                     e.printStackTrace();
                     message.what = IOERROR;
