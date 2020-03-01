@@ -157,7 +157,7 @@ public class SplashActivity extends BaseActivity {
                     goHome();
                     break;
                 case FILENOTFOUNDERROR:
-                    Toast.makeText(SplashActivity.this,"文件找不到或没权限",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashActivity.this,"文件找不到或没文件读写权限",Toast.LENGTH_SHORT).show();
                     goHome();
                     break;
                 default:
