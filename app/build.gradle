@@ -10,8 +10,26 @@ android {
         versionName "西瓜版"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            keyAlias 'test'
+            keyPassword '123456'
+            storeFile file('../config/release.jks')
+            storePassword '123456'
+            v1SigningEnabled true
+            v2SigningEnabled false
+        }
+        debug {
+            keyAlias 'test'
+            keyPassword '123456'
+            storeFile file('C:/Users/kuangzeyu2019/Desktop/123456.jks')
+            storePassword '123456'
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
