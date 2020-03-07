@@ -6,5 +6,40 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    <style name="setup_title_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@mipmap/blue_bkg</item>
+    </style>
 
+    <style name="setup1_desc_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#bb000000</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:drawableLeft">@android:drawable/btn_star_big_on</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">5dp</item>
+    </style>
+    <style name="dot_setup_style">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="icon_setup_center">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="btn_setup_bottom">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_dialog_btn_bg</item>
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
 </resources>

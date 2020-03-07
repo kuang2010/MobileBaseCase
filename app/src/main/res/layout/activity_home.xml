@@ -7,8 +7,56 @@
     tools:context=".activity.HomeActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@mipmap/blue_bkg">
+        <ImageView
+            android:id="@+id/iv_heima_home"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/heima"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="140dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="360安全卫士"
+                android:textSize="18sp"/>
+            <com.kzy.mobilesafe.view.FocusTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不忘初心，砥砺前行，只争朝夕，不负韶华。不忘初心，砥砺前行，只争朝夕，不负韶华。"
+                android:textColor="#f00000"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:textSize="16sp"/>
+            <!--android:focusable="true"
+            android:focusableInTouchMode="true"-->
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_setting_home"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/selector_setting_home"/>
+    </RelativeLayout>
+
+    <GridView
+        android:paddingTop="10dp"
+        android:id="@+id/gv_function"
+        android:numColumns="2"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_item_bg">
+    <ImageView
+        android:id="@+id/iv_icon_funtion_item"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/hcql"
+        android:layout_marginLeft="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/iv_icon_funtion_item"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/tv_title_item_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机防盗"
+            android:textSize="16sp"
+            android:textColor="#aa000000"/>
+        <TextView
+            android:id="@+id/tv_desc_item_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机丢失好找"
+            android:layout_marginTop="5dp"
+            android:textSize="13sp"
+            android:textColor="#88000000"/>
+    </LinearLayout>
+</RelativeLayout>

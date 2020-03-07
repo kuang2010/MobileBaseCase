@@ -1,43 +1,29 @@
-package com.kzy.mobilesafe;
-
-
-import org.junit.Test;
+package com.kzy.mobilesafe.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static org.junit.Assert.*;
-
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * author: kuangzeyu2019
+ * date: 2020/3/7
+ * time: 23:20
+ * desc: md5加密
  */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
+public class Md5Util {
 
-    @Test
-    public void test1(){
-
-        String kzy = md5Encode("13714785411");
-
-        System.out.print("kzy:"+kzy);
-    }
-
-    public String md5Encode(String src){
+    public static String md5Encode(String src){
         String res="";
         try {
             MessageDigest md5 = MessageDigest.getInstance("md5");
             byte[] digest = md5.digest(src.getBytes());
+            //将字节数组转成十六进制表示的字符串
             for (byte dt : digest){
                 //将字节或int数据转成十六进制表示
+                //String hex = Integer.toHexString(dt);//ffffffae,ffffff58,e3,5
                 //一个字节 8bit 可表示2位十六进制数
                 //去掉一个int类型前3个字节
                 int d = dt & 0x000000ff;
-                String hex = Integer.toHexString(d);
+                String hex = Integer.toHexString(d);//小的数据类型byte向大的数据类型int类型转换时系统会自动增加分配内存空间，所以要& 0x000000ff去掉多分配的三个字节空间
                 if (hex.length()==1){
                     hex = "0"+hex;
                 }

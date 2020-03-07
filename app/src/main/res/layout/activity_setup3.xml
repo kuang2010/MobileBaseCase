@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.sjfd.Setup3Activity">
+    <TextView style="@style/setup_title_style"
+        android:text="3.设置安全号码"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIM卡如果发生变化：\n报警短信发给安全号码"
+        android:textSize="12sp"
+        android:textColor="#aa000000"/>
+    <EditText
+        android:id="@+id/et_input_phone_setup3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入安全号码"
+        android:inputType="phone"/>
+    <Button
+        android:id="@+id/btn_select_phone_setup3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择安全号码"
+        android:background="@drawable/selector_dialog_btn_bg"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <View
+            style="@style/dot_setup_style"
+            android:background="@android:drawable/presence_invisible"/>
+        <View
+            style="@style/dot_setup_style"
+            android:background="@android:drawable/presence_invisible"/>
+        <View
+            style="@style/dot_setup_style"
+            android:background="@android:drawable/presence_online"/>
+        <View
+            style="@style/dot_setup_style"
+            android:background="@android:drawable/presence_invisible"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            style="@style/icon_setup_center"
+            android:src="@mipmap/step_3" />
+        <Button
+            android:id="@+id/btn_pre_setup3"
+            style="@style/btn_setup_bottom"
+            android:text="上一步"/>
+        <Button
+            android:id="@+id/btn_next_setup3"
+            style="@style/btn_setup_bottom"
+            android:layout_alignParentRight="true"
+            android:text="下一步"/>
+    </RelativeLayout>
+</LinearLayout>
