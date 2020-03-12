@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入安全号码"
-        android:inputType="phone"/>
+        android:inputType="phone"
+        android:maxLength="11" />
     <Button
         android:id="@+id/btn_select_phone_setup3"
         android:layout_width="match_parent"

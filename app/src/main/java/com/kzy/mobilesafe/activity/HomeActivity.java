@@ -2,9 +2,6 @@ package com.kzy.mobilesafe.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +19,7 @@ import android.widget.Toast;
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.activity.sjfd.SetupHomeActivity;
-import com.kzy.mobilesafe.adapter.MyAdapter;
+import com.kzy.mobilesafe.adapter.HomeFunctionAdapter;
 import com.kzy.mobilesafe.bean.FuntionBean;
 import com.kzy.mobilesafe.utils.Md5Util;
 import com.kzy.mobilesafe.utils.SpUtil;
@@ -36,7 +32,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private Button mBtnSettingHome;
     private GridView mGvFunction;
     private ArrayList<FuntionBean> mFuntionBeans;
-    private MyAdapter mAdapter;
+    private HomeFunctionAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +174,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mFuntionBeans.add(new FuntionBean(R.mipmap.lltj,"病毒查杀","手机安全保障"));
         mFuntionBeans.add(new FuntionBean(R.mipmap.hcql,"缓存清理","清理垃圾数据"));
         mFuntionBeans.add(new FuntionBean(R.mipmap.cygj,"流量统计","注意流量超标"));
-        mAdapter = new MyAdapter(this);
+        mAdapter = new HomeFunctionAdapter(this);
         mGvFunction.setAdapter(mAdapter);
 
         mAdapter.setDatas(mFuntionBeans);

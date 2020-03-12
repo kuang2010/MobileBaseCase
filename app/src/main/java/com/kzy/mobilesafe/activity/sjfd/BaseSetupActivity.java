@@ -71,6 +71,11 @@ public abstract class BaseSetupActivity extends BaseActivity implements View.OnC
         });
     }
 
+    //下一步的条件校验是否通过
+    protected  boolean vaildAgree(){
+        return true;
+    };
+
     protected abstract Class getNextClass();//下一个向导页面的Class
 
     protected abstract Class getPreClass();//上一个向导页面的Class
@@ -97,7 +102,7 @@ public abstract class BaseSetupActivity extends BaseActivity implements View.OnC
     }
 
     public void goNextPage(Class nextClass) {
-        if (nextClass==null){
+        if (nextClass==null || !vaildAgree()){
             return;
         }
         Intent intent = new Intent(this,nextClass);

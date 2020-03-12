@@ -21,10 +21,10 @@ import java.util.ArrayList;
  * time: 16:21
  * desc:
  */
-public class MyAdapter extends BaseAdapter {
+public class HomeFunctionAdapter extends BaseAdapter {
     private Context mContext;
     ArrayList<FuntionBean> mFuntionBeans = new ArrayList<>();
-    public MyAdapter(Context context) {
+    public HomeFunctionAdapter(Context context) {
         mContext = context;
     }
 

@@ -11,7 +11,9 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".MobileApplication"
         android:allowBackup="true"
@@ -44,7 +46,8 @@
         <activity android:name=".activity.sjfd.Setup2Activity" />
         <activity android:name=".activity.sjfd.Setup3Activity" />
         <activity android:name=".activity.sjfd.Setup4Activity" />
-        <activity android:name=".activity.sjfd.SetupHomeActivity"></activity>
+        <activity android:name=".activity.sjfd.SetupHomeActivity" />
+        <activity android:name=".activity.sjfd.ContactListActivity"></activity>
     </application>
 
 </manifest>

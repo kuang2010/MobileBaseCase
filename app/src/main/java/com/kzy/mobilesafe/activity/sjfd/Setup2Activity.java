@@ -3,6 +3,7 @@ package com.kzy.mobilesafe.activity.sjfd;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kzy.mobilesafe.BuildConfig;
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.utils.SpUtil;
@@ -79,11 +81,14 @@ public class Setup2Activity extends BaseSetupActivity {
                 //还没绑定SIM，则去绑定
                 TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
                 String simSerialNumber = telephonyManager.getSimSerialNumber();
+                if (BuildConfig.DEBUG && TextUtils.isEmpty(simSerialNumber)){
+                    simSerialNumber = telephonyManager.getDeviceId();
+                }
                 if (!TextUtils.isEmpty(simSerialNumber)){
                     SpUtil.putString(getApplicationContext(),MyConstants.SIM_NUM,simSerialNumber);
                     mIvLockUnlockSetup2.setImageResource(R.mipmap.lock);
                 }else {
-                    Toast.makeText(getApplicationContext(),"没读取手机状态信息的权限",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"手机SIM序列为空",Toast.LENGTH_SHORT).show();
                 }
             }else {
                 //已绑定，则清除绑定
@@ -94,18 +99,13 @@ public class Setup2Activity extends BaseSetupActivity {
     }
 
     @Override
-    public void goNextPage(Class nextClass) {
-        if (nextClass==null){
-            return;
-        }
+    protected boolean vaildAgree() {
         String sim_num = getSimNumFromSp();
         if (TextUtils.isEmpty(sim_num)){
             Toast.makeText(getApplicationContext(),"请先绑定SIM卡",Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
-        Intent intent = new Intent(this,nextClass);
-        startActivity(intent);
-        overridePendingTransition(R.anim.activity_entry_fromright_anim,R.anim.activity_exit_toleft_anim);
-        finish();
+        return true;
     }
+
 }
