@@ -38,6 +38,7 @@ public class SetupHomeActivity extends Activity {
     private void enterGuideSetUpActivity() {
         Intent intent = new Intent(this,Setup1Activity.class);
         startActivity(intent);
+        finish();
     }
 
     private void initView() {
