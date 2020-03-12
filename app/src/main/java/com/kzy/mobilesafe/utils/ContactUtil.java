@@ -43,8 +43,6 @@ public class ContactUtil {
 
                         String id = cursor_rawContactId.getString(0);
 
-                        Log.d("tagtag","cursor_rawContactId:"+id);
-
                         if (!TextUtils.isEmpty(id)){
 
                             if (contactorBeans==null){
@@ -55,6 +53,7 @@ public class ContactUtil {
 
                             contactorBeans.add(contactorBean);
 
+                            //data表里看着是mimetype_id字段，实则是mimetype字段！
                             Cursor cursor_data = resolver.query(uri_data, new String[]{"data1", "mimetype"}, "raw_contact_id=?", new String[]{"" + id}, null);
 
                             while (cursor_data.moveToNext()){
@@ -62,8 +61,6 @@ public class ContactUtil {
                                 String data1 = cursor_data.getString(0);
 
                                 String mimetype = cursor_data.getString(1);
-
-                                Log.d("tagtag","data1:"+data1+",mimetype_id:"+mimetype);
 
                                 if ("vnd.android.cursor.item/phone_v2".equals(mimetype)){
                                     //data是号码
