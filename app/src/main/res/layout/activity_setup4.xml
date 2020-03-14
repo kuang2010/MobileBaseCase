@@ -17,9 +17,10 @@
         android:paddingHorizontal="5dp"
         android:layout_marginLeft="5dp"/>
     <TextView
+        android:id="@+id/tv_desc_fandao_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="防盗保护示范开启"/>
+        android:text="防盗保护服务关闭"/>
 
     <LinearLayout
         android:layout_width="match_parent"

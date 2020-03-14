@@ -5,6 +5,7 @@ import android.animation.AnimatorInflater;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -42,19 +43,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         initData();
         initEvent();
         initAnimator();
+
+
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("tagtag","onSaveInstanceState");
-    }
-
-    @Override
-    protected void onRestoreInstanceState( Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.d("tagtag","onSaveInstanceState");
-    }
 
     private void initAnimator() {
         /*ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(

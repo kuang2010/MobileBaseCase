@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
+import com.kzy.mobilesafe.utils.SpUtil;
 
 public class Setup3Activity extends BaseSetupActivity {
 
@@ -33,6 +37,12 @@ public class Setup3Activity extends BaseSetupActivity {
     @Override
     protected void initData() {
         super.initData();
+        String safePhone = SpUtil.getString(this, MyConstants.SAFEPHONE, null);
+        if (!TextUtils.isEmpty(safePhone)){
+            mEtInputPhoneSetup3.setText(safePhone);
+            mEtInputPhoneSetup3.setSelection(safePhone.length());
+        }
+
     }
 
     @Override
@@ -61,7 +71,7 @@ public class Setup3Activity extends BaseSetupActivity {
         }else if (v.getId() == R.id.btn_select_phone_setup3){
             //获取通讯录里的电话号码
             //访问通讯录数据库
-            requestPermissions(new String[]{"android.permission.READ_CONTACTS"},10);
+            requestPermissions(new String[]{"android.permission.READ_CONTACTS","android.permission.SEND_SMS"},10);
         }
     }
 
@@ -77,5 +87,41 @@ public class Setup3Activity extends BaseSetupActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==123){
+            if (resultCode==RESULT_OK && data!=null){
+                String name = data.getStringExtra(MyConstants.CONTACTERNAME);
+                String phone = data.getStringExtra(MyConstants.CONTACTERPHONE);
+                if (phone.contains(",")){
+                    String[] split = phone.split(",");
+                    mEtInputPhoneSetup3.setText(split[0]);
+                }else {
+                    mEtInputPhoneSetup3.setText(phone);
+                }
+
+                mEtInputPhoneSetup3.setSelection(mEtInputPhoneSetup3.getText().toString().length());
+
+            }
+        }
+    }
+
+    @Override
+    protected boolean vaildAgree() {
+        if (mEtInputPhoneSetup3.getText().toString().length()==0){
+            Toast.makeText(this,"请填写安全号码",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return super.vaildAgree();
+    }
+
+    @Override
+    public void goNextPage(Class nextClass) {
+        //保存安全号码
+        SpUtil.putString(this,MyConstants.SAFEPHONE,mEtInputPhoneSetup3.getText().toString());
+        super.goNextPage(nextClass);
     }
 }

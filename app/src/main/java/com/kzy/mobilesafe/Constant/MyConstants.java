@@ -11,4 +11,8 @@ public interface MyConstants {
     String ENTER_ANTITHELF_PWD = "enter_antithelf_pwd";//进入手机防盗设置密码
     String FINISH_SETUP = "finish_setup";//防盗设置向导是否完成
     String SIM_NUM = "sim_num";//sim序列号key
+    String CONTACTERNAME = "ContacterName";
+    String CONTACTERPHONE = "ContacterPhone";
+    String SAFEPHONE = "safe_phone_num";//安全号码
+    String IS_BOOTCOMPLETE_START_SERVICE = "is_bootcomplete_Start_Service";//开机完成是否开启防盗服务
 }

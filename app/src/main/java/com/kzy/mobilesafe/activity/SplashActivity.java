@@ -71,6 +71,7 @@ public class SplashActivity extends BaseActivity {
         initData();
         initEvent();
         requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE","android.permission.READ_EXTERNAL_STORAGE"},100);
+
     }
 
     private void initAnimation() {

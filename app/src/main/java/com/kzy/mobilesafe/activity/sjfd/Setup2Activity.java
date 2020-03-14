@@ -81,7 +81,7 @@ public class Setup2Activity extends BaseSetupActivity {
                 //还没绑定SIM，则去绑定
                 TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
                 String simSerialNumber = telephonyManager.getSimSerialNumber();
-                if (BuildConfig.DEBUG && TextUtils.isEmpty(simSerialNumber)){
+                if (BuildConfig.DEBUG || TextUtils.isEmpty(simSerialNumber)){
                     simSerialNumber = telephonyManager.getDeviceId();
                 }
                 if (!TextUtils.isEmpty(simSerialNumber)){
