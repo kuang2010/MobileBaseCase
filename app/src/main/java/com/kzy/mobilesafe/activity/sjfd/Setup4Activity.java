@@ -112,7 +112,9 @@ public class Setup4Activity extends BaseSetupActivity {
         if (v.getId() == R.id.btn_pre_setup4){
             goPrePage(getPreClass());
         }else if (v.getId() == R.id.btn_complement_setup4){
-            requestPermissions(new String[]{"android.permission.RECEIVE_BOOT_COMPLETED"},125 );
+            if (vaildAgree()){
+                requestPermissions(new String[]{"android.permission.RECEIVE_BOOT_COMPLETED"},125 );
+            }
         }
     }
 
@@ -122,7 +124,7 @@ public class Setup4Activity extends BaseSetupActivity {
             Toast.makeText(this,"请先勾选开启防盗保护",Toast.LENGTH_SHORT).show();
             return false;
         }
-        return super.vaildAgree();
+        return true;
     }
 
     @Override
@@ -142,7 +144,9 @@ public class Setup4Activity extends BaseSetupActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 125){
             if (grantResults[0] == 0){
-                Toast.makeText(Setup4Activity.this,"设置完成",Toast.LENGTH_SHORT).show();
+                SpUtil.putBoolean(this,MyConstants.FINISH_SETUP,true);
+                Intent intent = new Intent(this,SetupHomeActivity.class);
+                startActivity(intent);
                 finish();
             }
         }

@@ -4,9 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.sjfd.SetupHomeActivity">
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="setup-home"/>
+
+    <TextView
+        style="@style/setup_title_style"
+        android:text="手机防盗"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/selector_dialog_btn_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="安全号码"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:id="@+id/tv_safe_phone_num_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13714785411"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_marginRight="15dp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/selector_dialog_btn_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="防盗保护是否开启"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ffffff"/>
+        <ImageView
+            android:id="@+id/iv_protect_is_open"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="25dp"
+            android:src="@mipmap/lock"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_to_setup_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_dialog_btn_bg"
+        android:text="重新进入设置向导界面"
+        android:textColor="#ffffff"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"/>
+    <TextView
+        style="@style/setup1_desc_text"
+        android:text="Sim卡变更报警" />
+    <TextView
+        style="@style/setup1_desc_text"
+        android:text="GPS追踪#*GPS*#" />
+    <TextView
+        style="@style/setup1_desc_text"
+        android:text="远程锁屏#*lockscreen*#" />
+    <TextView
+        style="@style/setup1_desc_text"
+        android:text="远程数据清除#*wipedata*#" />
+    <TextView
+        style="@style/setup1_desc_text"
+        android:text="播放音乐#*music*#" />
 </LinearLayout>
