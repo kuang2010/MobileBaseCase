@@ -113,7 +113,7 @@ public class Setup4Activity extends BaseSetupActivity {
             goPrePage(getPreClass());
         }else if (v.getId() == R.id.btn_complement_setup4){
             if (vaildAgree()){
-                requestPermissions(new String[]{"android.permission.RECEIVE_BOOT_COMPLETED"},125 );
+                requestPermissions(new String[]{"android.permission.RECEIVE_SMS","android.permission.RECEIVE_BOOT_COMPLETED","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"},125 );
             }
         }
     }
@@ -143,7 +143,7 @@ public class Setup4Activity extends BaseSetupActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 125){
-            if (grantResults[0] == 0){
+            if (grantResults[0] == 0 && grantResults[1] == 0 && grantResults[3] == 0){
                 SpUtil.putBoolean(this,MyConstants.FINISH_SETUP,true);
                 Intent intent = new Intent(this,SetupHomeActivity.class);
                 startActivity(intent);

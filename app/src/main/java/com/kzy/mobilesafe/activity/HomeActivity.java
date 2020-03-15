@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
+import com.kzy.mobilesafe.activity.service.FindPhoneService;
 import com.kzy.mobilesafe.activity.sjfd.SetupHomeActivity;
 import com.kzy.mobilesafe.adapter.HomeFunctionAdapter;
 import com.kzy.mobilesafe.bean.FuntionBean;
@@ -170,6 +171,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mGvFunction.setAdapter(mAdapter);
 
         mAdapter.setDatas(mFuntionBeans);
+
+
+        boolean startService = SpUtil.getBoolean(this, MyConstants.IS_BOOTCOMPLETE_START_SERVICE, false);
+        if (startService){
+            Intent intent2 = new Intent(this,FindPhoneService.class);
+            this.startService(intent2);
+        }
     }
 
     private void initView() {
