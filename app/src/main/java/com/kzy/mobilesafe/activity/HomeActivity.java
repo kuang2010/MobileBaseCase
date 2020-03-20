@@ -21,6 +21,7 @@ import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.activity.service.FindPhoneService;
 import com.kzy.mobilesafe.activity.sjfd.SetupHomeActivity;
+import com.kzy.mobilesafe.activity.txws.BlackActivity;
 import com.kzy.mobilesafe.adapter.HomeFunctionAdapter;
 import com.kzy.mobilesafe.bean.FuntionBean;
 import com.kzy.mobilesafe.utils.Md5Util;
@@ -71,6 +72,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 switch (position){
                     case 0://手机防盗
                         toMobileAntitheft();
+                        break;
+                    case 1://通讯卫士
+                        Intent intent = new Intent(HomeActivity.this,BlackActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }

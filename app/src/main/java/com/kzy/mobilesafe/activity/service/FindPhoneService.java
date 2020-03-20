@@ -97,13 +97,14 @@ public class FindPhoneService extends Service {
                         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                         Location location = locationManager.getLastKnownLocation("gps");
 
-                        String locMsg = "纬度："+location.getLatitude()+"  经度："+location.getLongitude();
-                        Log.d("tagtag","locMsg:"+locMsg);
+                        if(location!=null){
+                            String locMsg = "纬度："+location.getLatitude()+"  经度："+location.getLongitude();
+                            Log.d("tagtag","locMsg:"+locMsg);
 
-                        SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(SpUtil.getString(getApplicationContext(),MyConstants.SAFEPHONE,"5556"),null,locMsg,null,null);
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(SpUtil.getString(getApplicationContext(),MyConstants.SAFEPHONE,"5556"),null,locMsg,null,null);
 
-
+                        }
 
                     }
 

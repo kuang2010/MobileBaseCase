@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.kzy.mobilesafe.bean.BlackBean;
+import com.kzy.mobilesafe.db.BlackDao;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,5 +25,16 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.kzy.mobilesafe", appContext.getPackageName());
+    }
+
+    @Test
+    public void MyTest1(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+        BlackDao blackDao = new BlackDao(appContext);
+        for (int i=0;i<100;i++){
+            BlackBean blackBean = new BlackBean("110"+i,1);
+            blackDao.insert(blackBean);
+        }
+        System.out.println(">>>>>>>>>>>>>>>>>>>>");
     }
 }

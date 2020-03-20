@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.txws.BlackActivity">
+    <RelativeLayout
+        android:id="@+id/rl_header_black_intercept"
+        style="@style/setup_title_style">
+
+        <TextView
+            style="@style/setup_title_style"
+            android:background="@null"
+            android:text="通讯卫士"/>
+
+        <ImageView
+            android:id="@+id/iv_add_black"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/selector_add_black"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_black_ui_no_data"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/empty"
+        android:layout_centerInParent="true"/>
+
+    <ListView
+        android:id="@+id/lv_black_ui_have_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_header_black_intercept"
+        android:visibility="gone"/>
+
+</RelativeLayout>

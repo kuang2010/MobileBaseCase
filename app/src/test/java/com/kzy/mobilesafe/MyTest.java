@@ -42,4 +42,11 @@ public class MyTest {
             System.out.println(a);
         }
     }
+
+
+    @Test
+    public void test2(){
+        double d = 1>>2;
+        System.out.println(""+d);
+    }
 }
