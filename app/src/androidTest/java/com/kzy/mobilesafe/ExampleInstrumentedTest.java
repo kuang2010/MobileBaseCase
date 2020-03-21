@@ -6,9 +6,12 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.kzy.mobilesafe.bean.BlackBean;
 import com.kzy.mobilesafe.db.BlackDao;
+import com.kzy.mobilesafe.db.BlackDb;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -31,10 +34,18 @@ public class ExampleInstrumentedTest {
     public void MyTest1(){
         Context appContext = InstrumentationRegistry.getTargetContext();
         BlackDao blackDao = new BlackDao(appContext);
-        for (int i=0;i<100;i++){
-            BlackBean blackBean = new BlackBean("110"+i,1);
+        for (int i=300;i<400;i++){
+            BlackBean blackBean = new BlackBean("110"+i,BlackDb.MODE_PHONE);
             blackDao.insert(blackBean);
         }
         System.out.println(">>>>>>>>>>>>>>>>>>>>");
+    }
+
+    @Test
+    public void MyTest2(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+        BlackDao blackDao = new BlackDao(appContext);
+        List<BlackBean> list = blackDao.queryAll();
+        System.out.println("list>>"+list.toString());
     }
 }

@@ -5,13 +5,7 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/tv_title_dialog_pwd_home"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@mipmap/blue_bkg"
-        android:text="设置密码"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="20sp"/>
+        style="@style/dialog_title_text"/>
     <EditText
         android:id="@+id/et_enter_pwd_dialog"
         android:layout_width="match_parent"

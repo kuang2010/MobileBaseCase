@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="13714521452"
+        android:id="@+id/tv_phone_black"/>
+    <TextView
+        android:id="@+id/tv_mode_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="短信拦截"
+        android:layout_below="@id/tv_phone_black"
+        android:layout_marginTop="15dp"/>
+
+    <ImageView
+        android:id="@+id/iv_delete_black"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/selector_delete_black"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
