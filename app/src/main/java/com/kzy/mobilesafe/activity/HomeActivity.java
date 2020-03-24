@@ -66,7 +66,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initEvent() {
-        mBtnSettingHome.setOnClickListener(this);
+        mBtnSettingHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,SettingCenterActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mGvFunction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

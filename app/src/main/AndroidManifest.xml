@@ -83,8 +83,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.txws.BlackActivity"></activity>
-        <activity android:name=".activity.txws.BlackLoadMoreActivity"></activity>
+        <activity android:name=".activity.txws.BlackActivity" />
+        <activity android:name=".activity.txws.BlackLoadMoreActivity" />
+        <activity android:name=".activity.SettingCenterActivity"></activity>
+
+        <service android:name=".activity.service.BlackInterceptService"/>
     </application>
 
 </manifest>

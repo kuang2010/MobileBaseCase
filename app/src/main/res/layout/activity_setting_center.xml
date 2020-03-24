@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SettingCenterActivity">
+
+    <com.kzy.mobilesafe.view.ToggleView
+        android:id="@+id/tgv_zdgx_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:text="自动更新设置"
+        app:bgselector="first" />
+    <com.kzy.mobilesafe.view.ToggleView
+        android:id="@+id/tgv_black_intercept_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="黑名单拦截服务"
+        app:bgselector="last" />
+
+</LinearLayout>

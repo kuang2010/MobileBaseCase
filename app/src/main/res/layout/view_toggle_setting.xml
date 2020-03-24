@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
+<!--自定义控件的布局：抽取组合控件里相同的那一部分UI作为该自定义控件的布局 ， 可变的样式可抽取属性来完成-->
+    <TextView
+        android:id="@+id/tv_desc_function_toggle_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textSize="18sp"
+        android:textColor="#666666"/>
+
+    <ImageView
+        android:id="@+id/iv_switch_toggle_view"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/off"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
