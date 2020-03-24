@@ -2,12 +2,9 @@ package com.kzy.mobilesafe.activity.txws;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,26 +31,37 @@ import com.kzy.mobilesafe.bean.BlackBean;
 import com.kzy.mobilesafe.db.BlackDao;
 import com.kzy.mobilesafe.db.BlackDb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 黑名单页面
+ * 黑名单 分批 加载页面
  */
-public class BlackActivity extends Activity implements View.OnClickListener {
+public class BlackLoadMoreActivity extends Activity implements View.OnClickListener {
 
     private static final int LOADING = 1;
     private static final int  FINISH = 2;
+    private static final int NOMOREDATA = 3;//没有数据了
     private ImageView mIvAddBlack;
     private ImageView mIvBlackUiNoData;
     private ListView mLvBlackUiHaveData;
     private BlackAdapter mAdapter;
     private BlackDao mBlackDao;
-    private List<BlackBean> mBlackBeans;
+    private List<BlackBean> mBlackBeans = new ArrayList<>();
     private ProgressDialog mProgressDialog;
     private PopupWindow mPopupWindow;
     private Animation mAnimation;
     private View mPopView;
     private Animator mAnimator;
+    private int countPerPage = 20;//每页加载20条数据
+    private int pageNum = 1;//或加载的页码
+    private enum LoadState{
+        init,
+        loading,
+        finish,
+        nodata
+    }
+    LoadState mLoadState = LoadState.init;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +167,35 @@ public class BlackActivity extends Activity implements View.OnClickListener {
     }
 
     private void initEvent() {
+
         mIvAddBlack.setOnClickListener(this);
+
+        mLvBlackUiHaveData.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
+                    //静止状态
+                    int lastVisiblePosition = mLvBlackUiHaveData.getLastVisiblePosition();//listview上最后一条数据的位置
+
+                    if (lastVisiblePosition!=-1 && lastVisiblePosition >= (mBlackBeans.size()-1)){
+                        //滑到了最后
+                        if (mLoadState==LoadState.init || mLoadState==LoadState.finish){
+                            //可以去加载更多数据
+                            getDataAndRefreshUI();
+
+                        }
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+
     }
 
     private void initData() {
@@ -175,11 +212,23 @@ public class BlackActivity extends Activity implements View.OnClickListener {
                 super.run();
                 mHandler.obtainMessage(LOADING).sendToTarget();
 
-                mBlackBeans = mBlackDao.queryAll();
+                //mBlackBeans = mBlackDao.queryAll();
 
+                //分批加载
+                //List<BlackBean> blackBeans = mBlackDao.queryPartData1(pageNum, countPerPage);
+                List<BlackBean> blackBeans = mBlackDao.queryPartData2(mBlackBeans.size(), countPerPage);
                 SystemClock.sleep(200);
 
-                mHandler.obtainMessage(FINISH).sendToTarget();
+                if (blackBeans!=null && blackBeans.size()>0){
+
+                    mBlackBeans.addAll(blackBeans);
+
+                    mHandler.obtainMessage(FINISH).sendToTarget();
+
+                }else {
+
+                    mHandler.obtainMessage(NOMOREDATA).sendToTarget();
+                }
             }
         }.start();
     }
@@ -190,22 +239,32 @@ public class BlackActivity extends Activity implements View.OnClickListener {
             super.handleMessage(msg);
             switch (msg.what){
                 case LOADING:
-                    mProgressDialog.show();
+                    mLoadState = LoadState.loading;
+//                    mProgressDialog.show();
                     break;
                 case FINISH:
+                    mLoadState = LoadState.finish;
+                    pageNum++;
+                    //有数据
+                    mIvBlackUiNoData.setVisibility(View.GONE);
+                    mLvBlackUiHaveData.setVisibility(View.VISIBLE);
+                    mAdapter.setDatas(mBlackBeans);
+                    mAdapter.notifyDataSetChanged();
+
+                    mProgressDialog.dismiss();
+                    break;
+                case NOMOREDATA://没有数据了
+                    mLoadState = LoadState.nodata;
                     if (mBlackBeans==null||mBlackBeans.size()==0){
                         //没有数据
                         mIvBlackUiNoData.setVisibility(View.VISIBLE);
                         mLvBlackUiHaveData.setVisibility(View.GONE);
                     }else {
-                        //有数据
+                        //没有更多数据了
                         mIvBlackUiNoData.setVisibility(View.GONE);
                         mLvBlackUiHaveData.setVisibility(View.VISIBLE);
-
-                        mAdapter.setDatas(mBlackBeans);
-                        mAdapter.notifyDataSetChanged();
+                        Toast.makeText(BlackLoadMoreActivity.this,"没有更多数据了",Toast.LENGTH_SHORT).show();
                     }
-
                     mProgressDialog.dismiss();
                     break;
                 default:

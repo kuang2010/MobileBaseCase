@@ -84,6 +84,7 @@
         </receiver>
 
         <activity android:name=".activity.txws.BlackActivity"></activity>
+        <activity android:name=".activity.txws.BlackLoadMoreActivity"></activity>
     </application>
 
 </manifest>

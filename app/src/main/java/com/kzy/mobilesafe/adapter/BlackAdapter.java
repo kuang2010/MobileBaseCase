@@ -68,6 +68,7 @@ public class BlackAdapter extends BaseAdapter {
             viewHold.tv_phone_black = convertView.findViewById(R.id.tv_phone_black);
             viewHold.tv_mode_black = convertView.findViewById(R.id.tv_mode_black);
             viewHold.iv_delete_black = convertView.findViewById(R.id.iv_delete_black);
+            viewHold.tv_black_position = convertView.findViewById(R.id.tv_black_position);
             convertView.setTag(viewHold);
         }else {
             viewHold = (ViewHold) convertView.getTag();
@@ -77,7 +78,7 @@ public class BlackAdapter extends BaseAdapter {
 
         viewHold.tv_phone_black.setText(blackBean.getPhone());
 
-        int mode = blackBean.getMode();
+        final int mode = blackBean.getMode();
 
         if (mode == BlackDb.MODE_ALL){
 
@@ -92,15 +93,27 @@ public class BlackAdapter extends BaseAdapter {
             viewHold.tv_mode_black.setText("短信拦截");
         }
 
+        viewHold.tv_black_position.setText(""+position);
+
         viewHold.iv_delete_black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                mBlackBeans.remove(position);
+//                mBlackBeans.remove(position);
+//
+//                notifyDataSetChanged();
+//
+//                mBlackDao.delete(mBlackBeans.get(position).getPhone());//错误，前面remove了，导致mBlackBeans里元素的位置已经发生了变化，结果删掉的不是对应的bean
+
+
+//                不能处理分批加载
+                BlackBean blackBean1 = mBlackBeans.get(position);
+
+                mBlackBeans.remove(blackBean1);
 
                 notifyDataSetChanged();
 
-                mBlackDao.delete(mBlackBeans.get(position).getPhone());
+                mBlackDao.delete(blackBean1.getPhone());
 
             }
         });
@@ -116,5 +129,8 @@ public class BlackAdapter extends BaseAdapter {
 
         ImageView iv_delete_black;
 
+        TextView tv_black_position;
+
     }
+
 }

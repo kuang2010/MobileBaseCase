@@ -34,7 +34,7 @@ public class ExampleInstrumentedTest {
     public void MyTest1(){
         Context appContext = InstrumentationRegistry.getTargetContext();
         BlackDao blackDao = new BlackDao(appContext);
-        for (int i=300;i<400;i++){
+        for (int i=200;i<400;i++){
             BlackBean blackBean = new BlackBean("110"+i,BlackDb.MODE_PHONE);
             blackDao.insert(blackBean);
         }

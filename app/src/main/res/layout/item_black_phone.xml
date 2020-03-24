@@ -24,4 +24,11 @@
         android:src="@drawable/selector_delete_black"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_black_position"
+        android:text="pos"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
