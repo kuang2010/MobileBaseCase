@@ -106,14 +106,22 @@ public class BlackAdapter extends BaseAdapter {
 //                mBlackDao.delete(mBlackBeans.get(position).getPhone());//错误，前面remove了，导致mBlackBeans里元素的位置已经发生了变化，结果删掉的不是对应的bean
 
 
-//                不能处理分批加载
-                BlackBean blackBean1 = mBlackBeans.get(position);
+                /*不能处理分批加载。*/
+//                BlackBean blackBean1 = mBlackBeans.get(position);
 
-                mBlackBeans.remove(blackBean1);
+                /*不要在adapter里处理集合的增删改操作，因为要保持跟源集合一致*/
+//                mBlackBeans.remove(blackBean1);
 
-                notifyDataSetChanged();
+//                notifyDataSetChanged();
 
-                mBlackDao.delete(blackBean1.getPhone());
+//                mBlackDao.delete(blackBean1.getPhone());
+
+
+
+                //用接口暴露出去
+                if (mOnBlackItemClickListener!=null){
+                    mOnBlackItemClickListener.onDelete(position);
+                }
 
             }
         });
@@ -133,4 +141,13 @@ public class BlackAdapter extends BaseAdapter {
 
     }
 
+    public interface OnBlackItemClickListener{
+        void onDelete(int position);
+    }
+
+    private OnBlackItemClickListener mOnBlackItemClickListener;
+
+    public void setOnBlackItemClickListener(OnBlackItemClickListener onBlackItemClickListener) {
+        mOnBlackItemClickListener = onBlackItemClickListener;
+    }
 }

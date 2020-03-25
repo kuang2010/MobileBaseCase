@@ -13,7 +13,7 @@ import com.kzy.mobilesafe.view.ToggleView;
 /**
  * 设置中心
  */
-public class SettingCenterActivity extends Activity {
+public class SettingCenterActivity extends Activity implements ToggleView.OnToggleStateChangeListener {
 
     private ToggleView mTgvBlackInterceptSetting;
 
@@ -27,20 +27,7 @@ public class SettingCenterActivity extends Activity {
     }
 
     private void initEvent() {
-        mTgvBlackInterceptSetting.setOnToggleStateChangeListener(new ToggleView.OnToggleStateChangeListener() {
-            @Override
-            public void onToggleStateChange(boolean open) {
-                if (open){
-                    //开启黑名单拦截服务
-                    Intent intent = new Intent(SettingCenterActivity.this,BlackInterceptService.class);
-                    startService(intent);
-                }else {
-                    //关闭黑名单拦截服务
-                    Intent intent = new Intent(SettingCenterActivity.this,BlackInterceptService.class);
-                    stopService(intent);
-                }
-            }
-        });
+        mTgvBlackInterceptSetting.setOnToggleStateChangeListener(this);
     }
 
     private void initData() {
@@ -49,5 +36,21 @@ public class SettingCenterActivity extends Activity {
 
     private void initView() {
         mTgvBlackInterceptSetting = findViewById(R.id.tgv_black_intercept_setting);
+    }
+
+    @Override
+    public void onToggleStateChange(View view, boolean open) {
+        int id = view.getId();
+        if (id == R.id.tgv_black_intercept_setting){
+            if (open){
+                //开启黑名单拦截服务
+                Intent intent = new Intent(SettingCenterActivity.this,BlackInterceptService.class);
+                startService(intent);
+            }else {
+                //关闭黑名单拦截服务
+                Intent intent = new Intent(SettingCenterActivity.this,BlackInterceptService.class);
+                stopService(intent);
+            }
+        }
     }
 }

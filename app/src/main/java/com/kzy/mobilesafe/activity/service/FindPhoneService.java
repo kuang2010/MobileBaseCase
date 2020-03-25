@@ -20,6 +20,7 @@ import android.util.Log;
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.receiver.MyDeviceAdminReceiver;
+import com.kzy.mobilesafe.receiver.SmsReceiver;
 import com.kzy.mobilesafe.utils.SpUtil;
 
 
@@ -32,8 +33,6 @@ import com.kzy.mobilesafe.utils.SpUtil;
 public class FindPhoneService extends Service {
 
     private SmsReceiver mSmsReceiver;
-    private DevicePolicyManager mDm;
-    private ComponentName mComponentName;
 
     @Nullable
     @Override
@@ -50,10 +49,6 @@ public class FindPhoneService extends Service {
         intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
         intentFilter.setPriority(Integer.MAX_VALUE);
         registerReceiver(mSmsReceiver,intentFilter);
-
-        mDm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
-        mComponentName = new ComponentName(this,MyDeviceAdminReceiver.class);
-
     }
 
 
@@ -67,52 +62,4 @@ public class FindPhoneService extends Service {
         }
     }
 
-    private class SmsReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            Log.d("tagtag","SmsReceiver_onReceive");
-            Object[] pdus = (Object[]) intent.getExtras().get("pdus");
-
-            for (Object data: pdus){
-                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) data);
-                String smsBody = smsMessage.getDisplayMessageBody();
-                Log.d("tagtag","smsBody:"+smsBody);
-                if (smsBody!=null){
-                    if (smsBody.contains("#*music*#")){
-                        //播放音乐
-                        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.ahjj);
-                        if (!mediaPlayer.isPlaying()){
-                            mediaPlayer.start();
-                        }
-                    }else if (smsBody.contains("#*lockscreen*#")){
-                        //锁屏
-                        mDm.lockNow();
-                    }else if (smsBody.contains("#*wipedata*#")){
-                        //清除数据
-                        mDm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
-                    }else if (smsBody.contains("#*GPS*#")){
-                        //获取GPS位置信息
-                        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-                        Location location = locationManager.getLastKnownLocation("gps");
-
-                        if(location!=null){
-                            String locMsg = "纬度："+location.getLatitude()+"  经度："+location.getLongitude();
-                            Log.d("tagtag","locMsg:"+locMsg);
-
-                            SmsManager smsManager = SmsManager.getDefault();
-                            smsManager.sendTextMessage(SpUtil.getString(getApplicationContext(),MyConstants.SAFEPHONE,"5556"),null,locMsg,null,null);
-
-                        }
-
-                    }
-
-
-                }
-
-
-            }
-        }
-    }
 }

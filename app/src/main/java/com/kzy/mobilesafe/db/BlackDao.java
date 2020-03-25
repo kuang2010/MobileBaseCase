@@ -50,6 +50,8 @@ public class BlackDao {
 
     /**
      * 查询所有的数据
+     * _id desc 倒序查询即末尾行为起始查询位置0
+     *
      * @return
      */
     public List<BlackBean> queryAll(){
@@ -102,6 +104,9 @@ public class BlackDao {
 
     /**
      * 通过要查询的 页码 来分批查询数据
+     *
+     * _id desc 倒序查询即末尾行为起始查询位置0
+     *
      * @param pageNum 页码，从1开始
      * @param countPerPage 每次查多少条数据
      * @return
@@ -134,7 +139,10 @@ public class BlackDao {
 
 
     /**通过要查询的 起始位置 来分批查询数据
-     * @param startIndex 起始位置 从0开始
+     *
+     * _id desc 倒序查询即末尾行为起始查询位置0
+     *
+     * @param startIndex 起始位置 从0开始，查询的起始行=startIndex+1
      * @param countPerPage 每次查多少条数据
      * @return
      */
@@ -160,5 +168,56 @@ public class BlackDao {
         }
 
         return blackBeans;
+    }
+
+
+    /**
+     * 查询一行数据
+     * @param startIndex 起始位置， 查询的起始行=startIndex+1
+     * @return
+     */
+    public BlackBean queryOneAfterDelete(int startIndex){
+
+        BlackBean blackBean = null;
+
+        SQLiteDatabase database = mBlackDb.getReadableDatabase();
+
+        Cursor cursor = database.query(BlackDb.TBNAME, new String[]{BlackDb.BLACK_PHONE, BlackDb.BLACK_MODE}, null, null, null, null, "_id desc", ""+startIndex+",1");
+
+        while (cursor.moveToNext()){
+
+            String phone = cursor.getString(0);
+
+            int mode = cursor.getInt(1);
+
+            blackBean = new BlackBean(phone,mode);
+
+        }
+
+        return blackBean;
+    }
+
+
+    /**
+     * 根据手机号去查询拦截模式
+     * @param phone
+     * @return 拦截模式
+     */
+    public int queryMode(String phone) {
+        int mode = 0;
+
+        SQLiteDatabase database = mBlackDb.getReadableDatabase();
+
+        Cursor cursor = database.query(BlackDb.TBNAME, new String[]{BlackDb.BLACK_MODE}, BlackDb.BLACK_PHONE + "=?", new String[]{phone}, null, null, null);
+
+        while (cursor.moveToNext()){
+
+            mode = cursor.getInt(0);
+
+        }
+
+        database.close();
+
+        return mode;
     }
 }

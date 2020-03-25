@@ -1,5 +1,8 @@
 package com.kzy.mobilesafe.bean;
 
+
+import java.util.Objects;
+
 /**
  * author: kuangzeyu2019
  * date: 2020/3/21
@@ -35,6 +38,16 @@ public class BlackBean {
     public void setMode(int mode) {
         this.mode = mode;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BlackBean blackBean = (BlackBean) o;
+        return Objects.equals(phone, blackBean.phone);
+    }
+
 
     @Override
     public String toString() {

@@ -53,7 +53,7 @@ public class ToggleView extends RelativeLayout {
                 }
 
                 if (mOnToggleStateChangeListener!=null){
-                    mOnToggleStateChangeListener.onToggleStateChange(toggleStateIsOpen);
+                    mOnToggleStateChangeListener.onToggleStateChange(ToggleView.this,toggleStateIsOpen);
                 }
 
             }
@@ -118,7 +118,7 @@ public class ToggleView extends RelativeLayout {
 
 
     public interface OnToggleStateChangeListener{
-        void onToggleStateChange(boolean open);
+        void onToggleStateChange(View view,boolean open);
     }
 
     private OnToggleStateChangeListener mOnToggleStateChangeListener;

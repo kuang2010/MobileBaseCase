@@ -53,7 +53,7 @@ public class BlackLoadMoreActivity extends Activity implements View.OnClickListe
     private Animation mAnimation;
     private View mPopView;
     private Animator mAnimator;
-    private int countPerPage = 20;//每页加载20条数据
+    private int countPerPage = 3;//每页加载20条数据
     private int pageNum = 1;//或加载的页码
     private enum LoadState{
         init,
@@ -74,6 +74,9 @@ public class BlackLoadMoreActivity extends Activity implements View.OnClickListe
         initLoadingDialog();
 
         initPopuWindow();
+
+        requestPermissions(new String[]{"android.permission.RECEIVE_SMS"},100 );
+
 
     }
 
@@ -132,7 +135,7 @@ public class BlackLoadMoreActivity extends Activity implements View.OnClickListe
                     return;
                 }
 
-                //添加
+                //添加，不用做添加后再分页那么麻烦了，直接添加就好
                 BlackBean blackBean = new BlackBean();
                 blackBean.setPhone(et_black_phone_dialog.getText().toString().trim());
                 int mode = 0;
@@ -145,11 +148,15 @@ public class BlackLoadMoreActivity extends Activity implements View.OnClickListe
                 }
                 blackBean.setMode(mode);
 
+                mBlackBeans.remove(blackBean);
+                mBlackBeans.add(0,blackBean);
+                mAdapter.setDatas(mBlackBeans);
+
                 //最好在子线程里处理
                 mBlackDao.update(blackBean);
 
-                getDataAndRefreshUI();
-
+                mIvBlackUiNoData.setVisibility(View.GONE);
+                mLvBlackUiHaveData.setVisibility(View.VISIBLE);
                 mDialogAddBlack.dismiss();
             }
         });
@@ -167,6 +174,40 @@ public class BlackLoadMoreActivity extends Activity implements View.OnClickListe
     }
 
     private void initEvent() {
+
+        mAdapter.setOnBlackItemClickListener(new BlackAdapter.OnBlackItemClickListener() {
+            @Override
+            public void onDelete(int position) {
+                //删除
+                if (mBlackBeans!=null){
+
+                    if (mBlackBeans.size()>=position){
+                        BlackBean blackBean = mBlackBeans.get(position);
+                        mBlackBeans.remove(blackBean);
+                        mAdapter.setDatas(mBlackBeans);
+                        mBlackDao.delete(blackBean.getPhone());
+
+                        //由于是分页加载，所以要补充一个进来
+                        BlackBean blackBean1 = mBlackDao.queryOneAfterDelete(mBlackBeans.size());
+                        if (blackBean1!=null){
+                            mBlackBeans.add(blackBean1);
+                            mAdapter.setDatas(mBlackBeans);
+                        }
+
+                        if (mBlackBeans.size()==0){
+                            mIvBlackUiNoData.setVisibility(View.VISIBLE);
+                            mLvBlackUiHaveData.setVisibility(View.GONE);
+                        }
+
+                        //由于是分批加载数据，为了不造成数据混乱，需要先清除下集合数据,从头开始
+//                        mBlackBeans.clear();
+//                        getDataAndRefreshUI();
+                    }
+
+                }
+
+            }
+        });
 
         mIvAddBlack.setOnClickListener(this);
 
@@ -240,7 +281,7 @@ public class BlackLoadMoreActivity extends Activity implements View.OnClickListe
             switch (msg.what){
                 case LOADING:
                     mLoadState = LoadState.loading;
-//                    mProgressDialog.show();
+                    mProgressDialog.show();
                     break;
                 case FINISH:
                     mLoadState = LoadState.finish;

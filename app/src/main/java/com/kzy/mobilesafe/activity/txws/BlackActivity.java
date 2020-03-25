@@ -66,6 +66,8 @@ public class BlackActivity extends Activity implements View.OnClickListener {
 
         initPopuWindow();
 
+        requestPermissions(new String[]{"android.permission.RECEIVE_SMS"},100 );
+
     }
 
 
