@@ -86,7 +86,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
                     Location location = locationManager.getLastKnownLocation("gps");
 
-                    if(false&&location!=null){
+                    if(location!=null){
                         String locMsg = "纬度："+location.getLatitude()+"  经度："+location.getLongitude();
                         Log.d("tagtag","locMsg:"+locMsg);
 
