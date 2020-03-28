@@ -188,10 +188,14 @@ public class BlackLoadMoreActivity extends Activity implements View.OnClickListe
                         mBlackDao.delete(blackBean.getPhone());
 
                         //由于是分页加载，所以要补充一个进来
-                        BlackBean blackBean1 = mBlackDao.queryOneAfterDelete(mBlackBeans.size());
-                        if (blackBean1!=null){
-                            mBlackBeans.add(blackBean1);
-                            mAdapter.setDatas(mBlackBeans);
+//                        BlackBean blackBean1 = mBlackDao.queryOneAfterDelete(mBlackBeans.size());
+                        List<BlackBean> blackBeans = mBlackDao.queryPartData2(mBlackBeans.size(),1);
+                        if (blackBeans!=null&&blackBeans.size()>0){
+                            BlackBean blackBean1 = blackBeans.get(0);
+                            if (blackBean1!=null){
+                                mBlackBeans.add(blackBean1);
+                                mAdapter.setDatas(mBlackBeans);
+                            }
                         }
 
                         if (mBlackBeans.size()==0){

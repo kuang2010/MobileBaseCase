@@ -14,7 +14,7 @@ import android.support.annotation.Nullable;
 public class BlackDb extends SQLiteOpenHelper {
 
     private static final String DBNAME = "black.db";//数据库名字
-    private static final int VERSION = 3;//数据库版本
+    private static final int VERSION = 4;//数据库版本
     public static final String TBNAME = "blackData";//表的名字
     public static final String BLACK_PHONE = "phone";//表的字段phone
     public static final String BLACK_MODE = "mode";//表的字段mode

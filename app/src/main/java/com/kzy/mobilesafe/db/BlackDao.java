@@ -103,7 +103,7 @@ public class BlackDao {
 
 
     /**
-     * 通过要查询的 页码 来分批查询数据
+     * 通过要查询的 页码 来分批查询数据,最终都是通过起始位置startIndex来分页查询
      *
      * _id desc 倒序查询即末尾行为起始查询位置0
      *
@@ -173,7 +173,7 @@ public class BlackDao {
 
     /**
      * 查询一行数据
-     * @param startIndex 起始位置， 查询的起始行=startIndex+1
+     * @param startIndex 起始位置， 查询的起始行=startIndex+1，startIndex从0开始
      * @return
      */
     public BlackBean queryOneAfterDelete(int startIndex){
