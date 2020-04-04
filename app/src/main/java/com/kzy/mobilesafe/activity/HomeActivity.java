@@ -181,7 +181,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mFuntionBeans.add(new FuntionBean(R.mipmap.lltj,"流量统计","注意流量超标"));
         mFuntionBeans.add(new FuntionBean(R.mipmap.lltj,"病毒查杀","手机安全保障"));
         mFuntionBeans.add(new FuntionBean(R.mipmap.hcql,"缓存清理","清理垃圾数据"));
-        mFuntionBeans.add(new FuntionBean(R.mipmap.cygj,"流量统计","注意流量超标"));
+        mFuntionBeans.add(new FuntionBean(R.mipmap.cygj,"高级工具","特性处理更好"));
         mAdapter = new HomeFunctionAdapter(this);
         mGvFunction.setAdapter(mAdapter);
 

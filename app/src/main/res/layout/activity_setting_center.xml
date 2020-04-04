@@ -7,6 +7,10 @@
     android:orientation="vertical"
     tools:context=".activity.SettingCenterActivity">
 
+    <TextView
+        style="@style/setup_title_style"
+        android:text="设置中心"/>
+
     <com.kzy.mobilesafe.view.ToggleView
         android:id="@+id/tgv_zdgx_setting"
         android:layout_width="match_parent"
