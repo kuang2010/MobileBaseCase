@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,6 +73,42 @@ public class SplashActivity extends BaseActivity {
         initEvent();
         requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE","android.permission.READ_EXTERNAL_STORAGE"},100);
 
+        copyDbToDirectory("address.db");
+        copyDbToDirectory("commonnum.db");
+    }
+
+    /**
+     * 拷贝assets目录下的数据库文件到私有文件夹下，以便后面程序的访问
+     * @param dbName 数据库名称
+     */
+    private void copyDbToDirectory(final String dbName) {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                try{
+                    AssetManager assets = getAssets();
+                    InputStream in = assets.open(dbName);
+                    File filesDir = getFilesDir();
+                    File file = new File(filesDir, dbName);
+                    if (file.exists()){
+                        return;
+                    }
+                    FileOutputStream out = new FileOutputStream(file);
+                    int len;
+                    byte[] buf = new byte[1024];
+                    while ((len=in.read(buf))>0){
+                        out.write(buf,0,len);
+                        out.flush();
+                    }
+                    out.close();
+                    in.close();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     private void initAnimation() {

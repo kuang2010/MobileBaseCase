@@ -66,6 +66,14 @@ public class ToggleView extends RelativeLayout {
         String text = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "text");
         String  textColor = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "textColor");
         String bgselector = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "bgselector");
+        boolean  togglevisible = attrs.getAttributeBooleanValue("http://schemas.android.com/apk/res-auto", "togglevisible",true);
+
+        if (togglevisible){
+            mIvSwitchToggleView.setVisibility(VISIBLE);
+        }else {
+            mIvSwitchToggleView.setVisibility(GONE);
+        }
+
         if (!TextUtils.isEmpty(text)){
             mTvDescFunctionToggleView.setText(text);
         }

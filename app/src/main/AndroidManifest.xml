@@ -8,13 +8,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".MobileApplication"
@@ -86,9 +87,12 @@
 
         <activity android:name=".activity.txws.BlackActivity" />
         <activity android:name=".activity.txws.BlackLoadMoreActivity" />
-        <activity android:name=".activity.SettingCenterActivity"></activity>
+        <activity android:name=".activity.SettingCenterActivity" />
 
-        <service android:name=".activity.service.BlackInterceptService"/>
+        <service android:name=".activity.service.BlackInterceptService" />
+
+        <activity android:name=".activity.gjgj.AToolHomeActivity" />
+        <activity android:name=".activity.gjgj.TelepAddressQueryActivity"></activity>
     </application>
 
 </manifest>

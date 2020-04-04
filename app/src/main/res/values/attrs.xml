@@ -8,5 +8,6 @@
             <enum name="middle" value="2"/>
             <enum name="last" value="3"/>
         </attr>
+        <attr name="togglevisible" format="boolean"/>
     </declare-styleable>
 </resources>

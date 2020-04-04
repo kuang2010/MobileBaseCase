@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.gjgj.TelepAddressQueryActivity">
+
+    <TextView
+        style="@style/setup_title_style"
+        android:text="号码归属地查询"/>
+
+    <EditText
+        android:id="@+id/et_phone_num_addr_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:hint="请输入号码"/>
+
+    <Button
+        android:id="@+id/btn_query_addr_tool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查询"
+        android:background="@drawable/selector_dialog_btn_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="归属地:"/>
+
+    <TextView
+        android:id="@+id/tv_tel_address_tool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#f00000"
+        android:layout_marginLeft="60dp"/>
+</LinearLayout>

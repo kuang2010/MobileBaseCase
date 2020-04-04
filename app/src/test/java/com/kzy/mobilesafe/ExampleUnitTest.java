@@ -1,6 +1,8 @@
 package com.kzy.mobilesafe;
 
 
+import com.kzy.mobilesafe.db.TelAddressDao;
+
 import org.junit.Test;
 
 import java.security.MessageDigest;
@@ -48,5 +50,12 @@ public class ExampleUnitTest {
             e.printStackTrace();
         }
         return res;
+    }
+
+
+    @Test
+    public void test2(){
+        boolean mobilePhone = TelAddressDao.isMobilePhone("13714785411");
+        System.out.println("mobilePhone>>"+mobilePhone);
     }
 }

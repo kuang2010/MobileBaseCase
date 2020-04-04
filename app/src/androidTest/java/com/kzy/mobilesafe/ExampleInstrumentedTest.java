@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.kzy.mobilesafe.bean.BlackBean;
 import com.kzy.mobilesafe.db.BlackDao;
 import com.kzy.mobilesafe.db.BlackDb;
+import com.kzy.mobilesafe.db.TelAddressDao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,5 +48,13 @@ public class ExampleInstrumentedTest {
         BlackDao blackDao = new BlackDao(appContext);
         List<BlackBean> list = blackDao.queryAll();
         System.out.println("list>>"+list.toString());
+    }
+
+    @Test
+    public void MyTest3(){
+
+        String location = TelAddressDao.getLocation("13148814853");
+
+        System.out.println("location>>>>"+location);
     }
 }
