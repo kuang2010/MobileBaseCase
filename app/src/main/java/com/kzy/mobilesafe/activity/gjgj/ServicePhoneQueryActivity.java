@@ -15,7 +15,7 @@ import com.kzy.mobilesafe.bean.ServicePhoneBean;
 import com.kzy.mobilesafe.db.ServicePhoneDao;
 
 /**
- *
+ * 服务号码查询页
  */
 public class ServicePhoneQueryActivity extends Activity {
 

@@ -12,7 +12,7 @@
         <TextView
             style="@style/setup_title_style"
             android:background="@null"
-            android:text="通讯卫士"/>
+            android:text="黑名单拦截"/>
 
         <ImageView
             android:id="@+id/iv_add_black"

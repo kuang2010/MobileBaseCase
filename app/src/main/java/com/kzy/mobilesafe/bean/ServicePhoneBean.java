@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class ServicePhoneBean {
 
-    private List<String> firstLayerDatas;
+    private List<String> firstLayerDatas; //组数据
 
 
-    private List<List<ServicePhoneSecondData>> secondLayerDatas;
+    private List<List<ServicePhoneSecondData>> secondLayerDatas; //子数据
 
     public List<String> getFirstLayerDatas() {
         if (firstLayerDatas == null) {
