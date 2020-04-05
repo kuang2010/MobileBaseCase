@@ -25,4 +25,19 @@
         app:text="黑名单拦截服务"
         app:bgselector="last" />
 
+    <com.kzy.mobilesafe.view.ToggleView
+        android:id="@+id/tgv_show_location_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:text="来电显示归宿的服务"
+        app:bgselector="first" />
+    <com.kzy.mobilesafe.view.ToggleView
+        android:id="@+id/tgv_location_style_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="归宿的样式(半透明)"
+        app:bgselector="last"
+        app:togglevisible="false"/>
+
 </LinearLayout>

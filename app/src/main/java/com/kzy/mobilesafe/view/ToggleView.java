@@ -111,9 +111,6 @@ public class ToggleView extends RelativeLayout {
 
     }
 
-    public void setTextView(String text){
-        mTvDescFunctionToggleView.setText(text);
-    }
 
     public void setToggleState(boolean open){
         toggleStateIsOpen = open;
