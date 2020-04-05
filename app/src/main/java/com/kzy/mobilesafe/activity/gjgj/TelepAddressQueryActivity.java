@@ -1,15 +1,19 @@
 package com.kzy.mobilesafe.activity.gjgj;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kzy.mobilesafe.R;
@@ -37,6 +41,12 @@ public class TelepAddressQueryActivity extends Activity implements View.OnClickL
 
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(String name,  Context context,  AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
+    }
+
     private void initEvent() {
         mBtnQueryAddrTool.setOnClickListener(this);
     }
@@ -50,9 +60,13 @@ public class TelepAddressQueryActivity extends Activity implements View.OnClickL
     }
 
     private void initView() {
+        FrameLayout content = findViewById(android.R.id.content);
+
         mEtPhoneNumAddrTool = findViewById(R.id.et_phone_num_addr_tool);
-        mBtnQueryAddrTool = findViewById(R.id.btn_query_addr_tool);
+        mBtnQueryAddrTool = content.findViewById(R.id.btn_query_addr_tool);
         mTvTelAddressTool = findViewById(R.id.tv_tel_address_tool);
+
+
     }
 
     @Override

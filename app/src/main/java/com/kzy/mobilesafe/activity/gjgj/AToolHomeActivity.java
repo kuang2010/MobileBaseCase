@@ -52,6 +52,9 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
         if (id==R.id.tgv_query_address_atool){
             Intent intent_addr = new Intent(this,TelepAddressQueryActivity.class);
             startActivity(intent_addr);
+        }else if (id == R.id.tgv_query_service_phone_atool){
+            Intent intent_addr = new Intent(this,ServicePhoneQueryActivity.class);
+            startActivity(intent_addr);
         }
     }
 }
