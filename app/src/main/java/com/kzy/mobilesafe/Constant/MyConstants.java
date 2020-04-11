@@ -15,4 +15,6 @@ public interface MyConstants {
     String CONTACTERPHONE = "ContacterPhone";
     String SAFEPHONE = "safe_phone_num";//安全号码
     String IS_BOOTCOMPLETE_START_SERVICE = "is_bootcomplete_Start_Service";//开机完成是否开启防盗服务
+    String LOCATIONSTYLESELECTPOS = "location_style_select_pos";
+    int LOCATIONDEFOULTINDX = 0;
 }

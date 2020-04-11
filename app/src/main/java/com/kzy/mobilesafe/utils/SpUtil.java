@@ -32,4 +32,15 @@ public class SpUtil {
         SharedPreferences sp = context.getSharedPreferences(MyConstants.SPNAME, Context.MODE_PRIVATE);
         return sp.getBoolean(key,defaultValue);
     }
+
+    public static void putInt(Context context,String key,int value){
+        SharedPreferences sp = context.getSharedPreferences(MyConstants.SPNAME,Context.MODE_PRIVATE);
+        sp.edit().putInt(key,value).commit();
+    }
+
+    public static int getInt(Context context,String key,int defaultValue){
+        SharedPreferences sp = context.getSharedPreferences(MyConstants.SPNAME, Context.MODE_PRIVATE);
+        return sp.getInt(key,defaultValue);
+    }
+
 }

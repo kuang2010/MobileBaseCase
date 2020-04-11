@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
     <TextView
         android:id="@+id/tv_title_dialog_pwd_home"
         style="@style/dialog_title_text"/>
@@ -11,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入密码"
-        android:inputType="numberPassword"/>
+        android:inputType="number"
+        android:textColor="@android:color/white"/>
     <EditText
         android:id="@+id/et_confirm_pwd_dialog"
         android:layout_width="match_parent"

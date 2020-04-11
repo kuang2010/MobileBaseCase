@@ -121,6 +121,10 @@ public class ToggleView extends RelativeLayout {
         }
     }
 
+    public void setToggleText(String text) {
+        mTvDescFunctionToggleView.setText(text);
+    }
+
 
     public interface OnToggleStateChangeListener{
         void onToggleStateChange(View view,boolean open);

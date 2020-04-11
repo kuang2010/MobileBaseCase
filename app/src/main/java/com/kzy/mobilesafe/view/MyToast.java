@@ -2,15 +2,22 @@ package com.kzy.mobilesafe.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
+import com.kzy.mobilesafe.activity.LocationStyleDialog;
+import com.kzy.mobilesafe.utils.SpUtil;
 
 /**
  * author: kuangzeyu2019
@@ -27,6 +34,8 @@ public class MyToast implements View.OnTouchListener {
     private  TextView mTvToastMess;
     private float mDownRawX;
     private float mDownRawY;
+    private final Rect mRect;
+    private final LinearLayout mLlBgToast;
 
 
     public MyToast(Context context) {
@@ -42,7 +51,7 @@ public class MyToast implements View.OnTouchListener {
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
-        mParams.gravity = Gravity.LEFT|Gravity.TOP;//设置toast view的原点在左上角的位置,以便后面的拖动
+        mParams.gravity = Gravity.LEFT|Gravity.TOP;//设置toast view的中心在屏幕左上角的位置,以便后面的拖动
 
         int mOriginalX = mParams.x;
         int mOriginalY = mParams.y;
@@ -52,12 +61,20 @@ public class MyToast implements View.OnTouchListener {
 
         mTvToastMess = mView.findViewById(R.id.tv_toast_mess);
 
+        mLlBgToast = mView.findViewById(R.id.ll_bg_toast);
+
+
         mView.setOnTouchListener(this);
+
+
+        mRect = new Rect();
     }
 
     public void showToast(String mess){
 
         mTvToastMess.setText(mess);
+        int index = SpUtil.getInt(mContext, MyConstants.LOCATIONSTYLESELECTPOS, MyConstants.LOCATIONDEFOULTINDX);
+        mLlBgToast.setBackgroundResource(LocationStyleDialog.locDrawable[index]);
 
         mWM = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
 
@@ -74,6 +91,11 @@ public class MyToast implements View.OnTouchListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        //test
+        Looper.myLooper();
+        new Handler().getLooper();
 
     }
 
@@ -102,8 +124,56 @@ public class MyToast implements View.OnTouchListener {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                float moveRawX = event.getRawX();
-                float moveRawY = event.getRawY();
+                int moveRawX = (int) event.getRawX();
+                int moveRawY = (int) event.getRawY();
+
+//                mView.getGlobalVisibleRect(mRect);
+//                Log.d("tagtag","mRect2:"+mRect);
+//                if (!mRect.contains(moveRawX,moveRawY)){
+//                    //触摸点不在控件上
+//                    return false;
+//                }
+
+//                int x = (int) mView.getX();
+//                int y = (int) mView.getY();
+//                int width = mView.getWidth();
+//                int height = mView.getHeight();
+//                mRect.set(x,y,x+width,y+height);
+//                if (!mRect.contains(moveRawX,moveRawY)){
+//                    //触摸点不在控件上
+//                    return false;
+//                }
+
+
+
+                int[] location = new int[2];
+                mView.getLocationOnScreen(location);
+                int left = location[0];
+                int top = location[1];
+                int right = left + mView.getMeasuredWidth();
+                int bottom = top + mView.getMeasuredHeight();
+
+
+                mView.getGlobalVisibleRect(mRect);//xxxx
+                int left1 = mRect.left;
+                int top1 = mRect.top;
+
+                Log.d("tagtag1",""+left+","+top);
+                Log.d("tagtag2",""+left1+","+top1);
+
+
+                if (moveRawY >= top && moveRawY <= bottom && moveRawX >= left && moveRawX <= right) {
+                    Log.d("tagtag","触摸在控件范围内");
+                }else {
+                    Log.d("tagtag","触摸不在控件范围内");
+                    return false;
+                }
+
+
+
+
+
+
 
                 float v1 = moveRawX - mDownRawX;
                 float v2 = moveRawY - mDownRawY;
@@ -133,12 +203,12 @@ public class MyToast implements View.OnTouchListener {
 
                 break;
 
-            case MotionEvent.ACTION_UP://自己消费掉
+            case MotionEvent.ACTION_UP:
                 break;
 
 
         }
 
-        return true;
+        return true;//自己消费掉
     }
 }

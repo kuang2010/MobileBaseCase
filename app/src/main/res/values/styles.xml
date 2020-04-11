@@ -51,4 +51,31 @@
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="dialog_style">
+        <!--弹框是否有边框线-->
+        <item name="android:windowFrame">@null</item>
+        <!--弹框是否可浮现在activity之上才有外部可点击-->
+        <item name="android:windowIsFloating">true</item>
+        <!--弹窗是否半透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--弹窗是否允许被背景变暗-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <!--是否有遮盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--是否全屏-->
+        <item name="android:windowFullscreen">false</item>
+
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+
+    </style>
+
+    <style name="dialog_anim_style" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
+    </style>
+
 </resources>
