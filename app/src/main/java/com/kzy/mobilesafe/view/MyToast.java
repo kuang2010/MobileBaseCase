@@ -1,11 +1,14 @@
 package com.kzy.mobilesafe.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -46,7 +49,14 @@ public class MyToast implements View.OnTouchListener {
         mParams.format = PixelFormat.TRANSLUCENT;
         //去掉toast原来显示时的动画效果
         //params.windowAnimations = com.android.internal.R.style.Animation_Toast;
-        mParams.type = WindowManager.LayoutParams.TYPE_TOAST;//TYPE_TOAST  TYPE_PRIORITY_PHONE
+        //mParams.type = WindowManager.LayoutParams.TYPE_TOAST;//TYPE_TOAST  TYPE_PRIORITY_PHONE
+        //对版本有要求
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+            //Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+        }else {
+            mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        }
         mParams.setTitle("Toast");
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
@@ -118,12 +128,12 @@ public class MyToast implements View.OnTouchListener {
 
         switch (event.getAction()){
 
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN://按下的位置
                 mDownRawX = event.getRawX();
                 mDownRawY = event.getRawY();
                 break;
 
-            case MotionEvent.ACTION_MOVE:
+            case MotionEvent.ACTION_MOVE://移动后的位置
                 int moveRawX = (int) event.getRawX();
                 int moveRawY = (int) event.getRawY();
 

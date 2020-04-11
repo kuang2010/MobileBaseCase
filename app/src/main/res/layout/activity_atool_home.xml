@@ -30,4 +30,22 @@
         app:bgselector="last"
         app:togglevisible="false"/>
 
+    <com.kzy.mobilesafe.view.ToggleView
+        android:id="@+id/tgv_sms_backup_atool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="短信的备份"
+        app:bgselector="first"
+        app:textColor="#333333"
+        app:togglevisible="false"
+        android:layout_marginTop="20dp"/>
+
+    <com.kzy.mobilesafe.view.ToggleView
+        android:id="@+id/tgv_sms_restore_atool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textColor="#333333"
+        app:text="短信的还原"
+        app:bgselector="last"
+        app:togglevisible="false"/>
 </LinearLayout>
