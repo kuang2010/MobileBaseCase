@@ -55,7 +55,7 @@ public class MyToast implements View.OnTouchListener {
             mParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
             //Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         }else {
-            mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+            mParams.type = WindowManager.LayoutParams.TYPE_TOAST;//TYPE_SYSTEM_ALERT
         }
         mParams.setTitle("Toast");
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON

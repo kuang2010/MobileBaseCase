@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -30,8 +31,8 @@ public class SettingCenterActivity extends Activity implements ToggleView.OnTogg
 
     @Nullable
     @Override
-    public View onCreateView( String name,  Context context, AttributeSet attrs) {
-        if("FrameLayout".equals(name)){
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        if ("FrameLayout".equals(name)) {
             int count = attrs.getAttributeCount();
             for (int i = 0; i < count; i++) {
                 String attributeName = attrs.getAttributeName(i);
@@ -60,12 +61,12 @@ public class SettingCenterActivity extends Activity implements ToggleView.OnTogg
         initData();
         initEvent();
 
-        requestPermissions(new String[]{"android.permission.PROCESS_OUTGOING_CALLS"},100);
+        requestPermissions(new String[]{"android.permission.PROCESS_OUTGOING_CALLS"}, 100);
 
         View decorView = getWindow().getDecorView();
-        Log.d("decorView",""+decorView);
+        Log.d("decorView", "" + decorView);
         boolean b = decorView instanceof FrameLayout;
-        Log.d("decorView","b:"+b);
+        Log.d("decorView", "b:" + b);
     }
 
     private void initEvent() {
@@ -75,11 +76,11 @@ public class SettingCenterActivity extends Activity implements ToggleView.OnTogg
     }
 
     private void initData() {
-        mTgvBlackInterceptSetting.setToggleState(ServiceUtil.isSerivceRunning(this,"com.kzy.mobilesafe.activity.service.BlackInterceptService"));
-        mTgvShowLocationSetting.setToggleState(ServiceUtil.isSerivceRunning(this,"com.kzy.mobilesafe.activity.service.ShowPhoneLoactionService"));
+        mTgvBlackInterceptSetting.setToggleState(ServiceUtil.isSerivceRunning(this, "com.kzy.mobilesafe.activity.service.BlackInterceptService"));
+        mTgvShowLocationSetting.setToggleState(ServiceUtil.isSerivceRunning(this, "com.kzy.mobilesafe.activity.service.ShowPhoneLoactionService"));
 
         int index = SpUtil.getInt(SettingCenterActivity.this, MyConstants.LOCATIONSTYLESELECTPOS, MyConstants.LOCATIONDEFOULTINDX);
-        mTgvLocationStyleSetting.setToggleText("归宿的样式("+LocationStyleDialog.locDesc[index]+")");
+        mTgvLocationStyleSetting.setToggleText("归宿的样式(" + LocationStyleDialog.locDesc[index] + ")");
     }
 
     private void initView() {
@@ -91,27 +92,29 @@ public class SettingCenterActivity extends Activity implements ToggleView.OnTogg
     @Override
     public void onToggleStateChange(View view, boolean open) {
         int id = view.getId();
-        if (id == R.id.tgv_black_intercept_setting){
-            if (open){
+        if (id == R.id.tgv_black_intercept_setting) {
+            if (open) {
                 //开启黑名单拦截服务
-                Intent intent = new Intent(SettingCenterActivity.this,BlackInterceptService.class);
+                Intent intent = new Intent(SettingCenterActivity.this, BlackInterceptService.class);
                 startService(intent);
-            }else {
+            } else {
                 //关闭黑名单拦截服务
-                Intent intent = new Intent(SettingCenterActivity.this,BlackInterceptService.class);
+                Intent intent = new Intent(SettingCenterActivity.this, BlackInterceptService.class);
                 stopService(intent);
             }
-        }else if (id == R.id.tgv_show_location_setting){
-            if (open){
+        } else if (id == R.id.tgv_show_location_setting) {
+            if (open) {
                 //开启归宿地服务
-                Intent intent = new Intent(SettingCenterActivity.this,ShowPhoneLoactionService.class);
-                startService(intent);
-            }else {
+//                Intent intent = new Intent(SettingCenterActivity.this,ShowPhoneLoactionService.class);
+//                startService(intent);
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                startActivityForResult(intent, 123);
+            } else {
                 //关闭归宿地服务
-                Intent intent = new Intent(SettingCenterActivity.this,ShowPhoneLoactionService.class);
+                Intent intent = new Intent(SettingCenterActivity.this, ShowPhoneLoactionService.class);
                 stopService(intent);
             }
-        }else if (id == R.id.tgv_location_style_setting){
+        } else if (id == R.id.tgv_location_style_setting) {
             //归宿地样式
             LocationStyleDialog dialog = new LocationStyleDialog(this);
             dialog.show();
@@ -119,8 +122,19 @@ public class SettingCenterActivity extends Activity implements ToggleView.OnTogg
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     int index = SpUtil.getInt(SettingCenterActivity.this, MyConstants.LOCATIONSTYLESELECTPOS, MyConstants.LOCATIONDEFOULTINDX);
-                    mTgvLocationStyleSetting.setToggleText("归宿的样式("+LocationStyleDialog.locDesc[index]+")");                }
+                    mTgvLocationStyleSetting.setToggleText("归宿的样式(" + LocationStyleDialog.locDesc[index] + ")");
+                }
             });
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 123) {//开启归宿地服务
+            Intent intent = new Intent(SettingCenterActivity.this, ShowPhoneLoactionService.class);
+            startService(intent);
         }
     }
 }
