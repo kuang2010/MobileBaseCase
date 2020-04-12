@@ -18,7 +18,7 @@ public class BlackDb extends SQLiteOpenHelper {
     public static final String TBNAME = "blackData";//表的名字
     public static final String BLACK_PHONE = "phone";//表的字段phone
     public static final String BLACK_MODE = "mode";//表的字段mode
-    public static final int MODE_PHONE = 1<<0;//1 电话拦截
+    public static final int MODE_PHONE = 1<<0;//01 电话拦截
     public static final int MODE_SMS = 1<<1;//10 短信拦截
     public static final int MODE_ALL = MODE_PHONE | MODE_SMS;//11 全部拦截
 
