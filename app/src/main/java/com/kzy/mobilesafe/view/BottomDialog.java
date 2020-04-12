@@ -52,8 +52,9 @@ public class BottomDialog extends Dialog {
         params.gravity = Gravity.BOTTOM;
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.windowAnimations = R.style.dialog_anim_style;//设置动画m1
         getWindow().setAttributes(params);
-        getWindow().setWindowAnimations(R.style.dialog_anim_style);
+//        getWindow().setWindowAnimations(R.style.dialog_anim_style);//设置动画m2
     }
 
 }
