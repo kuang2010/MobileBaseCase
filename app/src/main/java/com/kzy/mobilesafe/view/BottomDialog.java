@@ -3,8 +3,6 @@ package com.kzy.mobilesafe.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +19,11 @@ import com.kzy.mobilesafe.R;
 public class BottomDialog extends Dialog {
 
 
-    public BottomDialog(@NonNull Context context) {
+    public BottomDialog(Context context) {
         this(context, R.style.dialog_style);
     }
 
-    public BottomDialog(@NonNull Context context, int themeResId) {
+    public BottomDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
 

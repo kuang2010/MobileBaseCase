@@ -1,9 +1,10 @@
 package com.kzy.mobilesafe.view;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * author: kuangzeyu2019
