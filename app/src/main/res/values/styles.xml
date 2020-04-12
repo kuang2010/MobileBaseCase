@@ -73,7 +73,7 @@
 
     </style>
 
-    <style name="dialog_anim_style" parent="@android:style/Animation.Dialog">
+    <style name="dialog_anim_style">
         <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
     </style>
