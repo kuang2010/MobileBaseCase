@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
+import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.db.TelAddressDao;
+import com.kzy.mobilesafe.utils.EncodeUtils;
 import com.kzy.mobilesafe.view.ToggleView;
 
 import java.io.BufferedReader;
@@ -78,7 +80,11 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
             try {
                 PrintWriter writer = new PrintWriter(file);
 
-                writer.print("{sms:[{'body':'你好啊','number':'13485865895'},{'body':'哈哈哈囍','number':'13485895685'}]}");
+                String sms_src = "{sms:[{'body':'你好啊','number':'13485865895'},{'body':'哈哈哈囍','number':'13485895685'}]}";
+
+                String enCodeStr = EncodeUtils.en_de_codeStr(sms_src, MyConstants.ximing);
+
+                writer.print(enCodeStr);
 
                 writer.close();
             } catch (FileNotFoundException e) {
@@ -98,6 +104,7 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
                     sb.append(line);
                 }
                 String json = sb.toString();
+                json = EncodeUtils.en_de_codeStr(json,MyConstants.ximing);
                 Gson gson = new Gson();
                 SmsBean smsBean = gson.fromJson(json, SmsBean.class);
                 Log.d("tagtag",""+smsBean.toString());

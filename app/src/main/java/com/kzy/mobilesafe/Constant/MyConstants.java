@@ -17,4 +17,5 @@ public interface MyConstants {
     String IS_BOOTCOMPLETE_START_SERVICE = "is_bootcomplete_Start_Service";//开机完成是否开启防盗服务
     String LOCATIONSTYLESELECTPOS = "location_style_select_pos";
     int LOCATIONDEFOULTINDX = 0;
+    byte ximing = 66;
 }
