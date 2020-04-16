@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.activity.gjgj.AToolHomeActivity;
+import com.kzy.mobilesafe.activity.rjgj.AppManageActivity;
 import com.kzy.mobilesafe.activity.service.FindPhoneService;
 import com.kzy.mobilesafe.activity.sjfd.SetupHomeActivity;
 import com.kzy.mobilesafe.activity.txws.BlackActivity;
@@ -91,6 +92,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     case 7://高级工具
                         Intent intent_tool = new Intent(HomeActivity.this,AToolHomeActivity.class);
                         startActivity(intent_tool);
+                        break;
+                    case 2://软件管家
+                        Intent intent_soft = new Intent(HomeActivity.this, AppManageActivity.class);
+                        startActivity(intent_soft);
                         break;
                 }
             }

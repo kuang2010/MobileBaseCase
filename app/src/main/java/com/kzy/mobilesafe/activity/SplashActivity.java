@@ -1,5 +1,6 @@
 package com.kzy.mobilesafe.activity;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AppOpsManager;
@@ -71,7 +72,9 @@ public class SplashActivity extends BaseActivity {
         initAnimation();
         initData();
         initEvent();
-        requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE","android.permission.READ_EXTERNAL_STORAGE"},100);
+        if (Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP){
+            requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE","android.permission.READ_EXTERNAL_STORAGE"},100);
+        }
 
         copyDbToDirectory("address.db");
         copyDbToDirectory("commonnum.db");

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.rjgj.AppManageActivity"
+    android:background="#ffffff">
+
+    <TextView
+        style="@style/setup_title_style"
+        android:text="软件管家"/>
+
+    <com.kzy.mobilesafe.view.MemoryProgressBar
+        android:id="@+id/pb_memory_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
+
+    <com.kzy.mobilesafe.view.MemoryProgressBar
+        android:id="@+id/pb_memory_sdcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/view_loading_progress"
+            android:id="@+id/layout_load"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_app_data"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
