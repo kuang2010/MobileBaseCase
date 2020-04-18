@@ -82,7 +82,7 @@ public class ServicePhoneQueryActivity extends Activity {
      */
     private void callPhone(String phone) {
         Intent intent = new Intent(Intent.ACTION_DIAL);//  ACTION_CALL  ACTION_DIAL
-        intent.setData(Uri.parse("tel://"+phone));
+        intent.setData(Uri.parse("tel:"+phone));
         startActivity(intent);
     }
 

@@ -229,7 +229,7 @@ public class SplashActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri uri = FileProvider.getUriForFile(this, "com.kzy.mobilesafe.fileProvider", apkFile);
+            Uri uri = FileProvider.getUriForFile(this, "com.kzy.mobilesafe.fileProvider", apkFile);//清单文件内容提供者主机名com.kzy.mobilesafe.fileProvider
             intent.setDataAndType(uri, "application/vnd.android.package-archive");
         } else {
             intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");

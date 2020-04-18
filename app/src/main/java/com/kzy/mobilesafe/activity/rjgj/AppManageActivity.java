@@ -1,20 +1,56 @@
 package com.kzy.mobilesafe.activity.rjgj;
 
 import android.app.Activity;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kzy.mobilesafe.R;
+import com.kzy.mobilesafe.adapter.AppManagerAdapter;
+import com.kzy.mobilesafe.bean.InstallAppBean;
+import com.kzy.mobilesafe.utils.AppInfoUtil;
+import com.kzy.mobilesafe.utils.DensityUtil;
 import com.kzy.mobilesafe.utils.PhoneUtil;
 import com.kzy.mobilesafe.view.MemoryProgressBar;
 
-public class AppManageActivity extends Activity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class AppManageActivity extends Activity implements View.OnClickListener {
+
+    private static final int LOADING = 1;
+    private static final int LOADFINISH = 2;
     private MemoryProgressBar mPb_memory_phone;
     private MemoryProgressBar mPb_memory_sdcard;
+    private ListView mLv_app_data;
+    private View mLayout_load;
+    private List<InstallAppBean> mInstallAppsInfo;
+    private List<InstallAppBean> mInstallSystemAppsInfo=new ArrayList<>();//系统APP
+    private List<InstallAppBean> mInstallUserAppsInfo=new ArrayList<>();//应用APP
+    private AppManagerAdapter mManagerAdapter;
+    private RelativeLayout mRl_app_data;
+    private TextView mTv_user;
+    private PopupWindow mPopupWindow;
+    private InstallAppBean clickInstallAppBean;
+    private AppUnInstallReceiver mAppUnInstallReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +59,80 @@ public class AppManageActivity extends Activity {
         initView();
         initData();
         initEvent();
+        initPopuWindow();
+        registerReceiver();
+    }
+
+    private void registerReceiver() {
+        //注册卸载完成的广播接收
+        mAppUnInstallReceiver = new AppUnInstallReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addDataScheme("package");
+        registerReceiver(mAppUnInstallReceiver,filter);
+
+    }
+
+    //卸载完成的广播接收者
+    class AppUnInstallReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            initData();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAppUnInstallReceiver!=null){
+            unregisterReceiver(mAppUnInstallReceiver);
+            mAppUnInstallReceiver=null;
+        }
+        super.onDestroy();
+    }
+
+    private void initPopuWindow() {
+        View contentView = View.inflate(this, R.layout.view_popwindow_appmanager, null);
+        mPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setAnimationStyle(R.style.popwindow_anim_style);
+
+        contentView.findViewById(R.id.ll_uninstall_appmanager).setOnClickListener(this);
+        contentView.findViewById(R.id.ll_launch_appmanager).setOnClickListener(this);
+        contentView.findViewById(R.id.ll_share_appmanager).setOnClickListener(this);
+        contentView.findViewById(R.id.ll_setting_appmanager).setOnClickListener(this);
+
+
     }
 
     private void initEvent() {
+        mLv_app_data.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem<mInstallSystemAppsInfo.size()+1){
+                    mTv_user.setText("系统软件("+mInstallSystemAppsInfo.size()+")");
+                }else{
+                    mTv_user.setText("应用软件("+mInstallUserAppsInfo.size()+")");
+                }
+            }
+        });
+
+        mLv_app_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mPopupWindow.showAsDropDown(view, DensityUtil.dip2px(AppManageActivity.this,65),-(view.getHeight()));
+                if (position<=mInstallSystemAppsInfo.size()){
+                    clickInstallAppBean = mInstallSystemAppsInfo.get(position-1);
+                }else {
+                    clickInstallAppBean = mInstallUserAppsInfo.get(position-mInstallSystemAppsInfo.size()-2);
+                }
+            }
+        });
     }
 
     private void initData() {
@@ -39,10 +145,118 @@ public class AppManageActivity extends Activity {
         mPb_memory_sdcard.setProgress(totalSdcardMemory-freeSdcardMemory,totalSdcardMemory);
         mPb_memory_sdcard.setText("sd卡可用内存:"+PhoneUtil.formatFileSize(this,freeSdcardMemory));
 
+        mManagerAdapter = new AppManagerAdapter(this);
+        mLv_app_data.setAdapter(mManagerAdapter);
+
+        getInstallAppInfos();
+    }
+
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case LOADING:
+                    mLayout_load.setVisibility(View.VISIBLE);
+                    mLv_app_data.setVisibility(View.GONE);
+                    mTv_user.setVisibility(View.GONE);
+                    break;
+                case LOADFINISH:
+                    mLayout_load.setVisibility(View.GONE);
+                    mLv_app_data.setVisibility(View.VISIBLE);
+                    mTv_user.setVisibility(View.VISIBLE);
+                    mManagerAdapter.setSystemAppBeans(mInstallSystemAppsInfo);
+                    mManagerAdapter.setUserAppBeans(mInstallUserAppsInfo);
+                    mTv_user.setText("系统软件("+mInstallSystemAppsInfo.size()+")");
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    mRl_app_data.removeView(mTv_user);
+                    mRl_app_data.addView(mTv_user,layoutParams);
+                    break;
+            }
+
+        }
+    };
+    private void getInstallAppInfos() {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                mHandler.obtainMessage(LOADING).sendToTarget();
+                mInstallAppsInfo = AppInfoUtil.getInstallAppsInfo(getApplicationContext());
+                //分类
+                mInstallSystemAppsInfo.clear();
+                mInstallUserAppsInfo.clear();
+                for (InstallAppBean installAppBean:mInstallAppsInfo){
+                    if (installAppBean.isSystemApp()){
+                        mInstallSystemAppsInfo.add(installAppBean);
+                    }else {
+                        mInstallUserAppsInfo.add(installAppBean);
+                    }
+                }
+                SystemClock.sleep(1000);
+                mHandler.obtainMessage(LOADFINISH).sendToTarget();
+            }
+        }.start();
     }
 
     private void initView() {
         mPb_memory_phone = findViewById(R.id.pb_memory_phone);
         mPb_memory_sdcard = findViewById(R.id.pb_memory_sdcard);
+        mLv_app_data = findViewById(R.id.lv_app_data);
+        mLayout_load = findViewById(R.id.layout_load);
+        mRl_app_data = findViewById(R.id.rl_app_data);
+        mTv_user = new TextView(this);
+        mTv_user.setTextSize(20);
+        mTv_user.setBackgroundColor(Color.GRAY);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_uninstall_appmanager:
+                //卸载
+                uninstallApp(clickInstallAppBean.getPackageName());
+                break;
+            case R.id.ll_launch_appmanager:
+                //启动
+                startApp(clickInstallAppBean.getPackageName());
+                break;
+            case R.id.ll_share_appmanager:
+                //分享
+                break;
+            case R.id.ll_setting_appmanager:
+                //设置
+                break;
+        }
+        mPopupWindow.dismiss();
+    }
+
+    /**
+     * 启动APP
+     * @param packageName
+     */
+    private void startApp(String packageName) {
+        Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (intent!=null){
+            startActivity(intent);
+        }else {
+            Toast.makeText(this,"没有界面",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 卸载应用APP
+     * @param packageName
+     */
+    private void uninstallApp(String packageName) {
+        if (clickInstallAppBean.isSystemApp()){
+
+        }else {
+            Intent intent = new Intent("android.intent.action.DELETE");
+            intent.setData(Uri.parse("package:"+packageName));
+            startActivity(intent);
+        }
+
     }
 }

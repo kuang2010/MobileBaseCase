@@ -26,16 +26,19 @@
         android:layout_marginRight="10dp"/>
 
     <RelativeLayout
+        android:id="@+id/rl_app_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include layout="@layout/view_loading_progress"
             android:id="@+id/layout_load"/>
 
-        <LinearLayout
+        <!--stickListview-->
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/lv_app_data"/>
+            android:id="@+id/lv_app_data"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
