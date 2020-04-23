@@ -15,7 +15,7 @@ import java.io.File;
 public class PhoneUtil {
 
     /**
-     * 获取总的手机内存大小
+     * 获取总的手机存储空间大小
      * @return byte
      */
     public static  long getTotalPhoneMemory(){
@@ -25,7 +25,7 @@ public class PhoneUtil {
     }
 
     /**
-     * 获取还可用的手机内存大小
+     * 获取还可用的手机存储空间大小
      * @return byte
      */
     public static long getFreePhoneMemory(){
@@ -35,7 +35,7 @@ public class PhoneUtil {
     }
 
     /**
-     * 获取SD卡总内存大小
+     * 获取SD卡总存储空间大小
      * @return byte
      */
     public static long getTotalSdcardMemory(){
@@ -45,7 +45,7 @@ public class PhoneUtil {
     }
 
     /**
-     * 获取sd卡可用内存
+     * 获取sd卡可用存储空间
      * @return byte
      */
     public static long getFreeSdcardMemory(){

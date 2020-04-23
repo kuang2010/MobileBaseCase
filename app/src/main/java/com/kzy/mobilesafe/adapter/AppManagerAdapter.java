@@ -26,6 +26,7 @@ public class AppManagerAdapter extends BaseAdapter {
     private Context mContext;
     private List<InstallAppBean> mInstallSystemAppBeans;
     private List<InstallAppBean> mInstallUserAppBeans;
+    private View.OnClickListener onItemClickListener;
     public AppManagerAdapter(Context context){
         mContext = context;
     }
@@ -65,7 +66,7 @@ public class AppManagerAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (position==0){
             //系统软件标签
             TextView tv_system = new TextView(mContext);
@@ -82,7 +83,7 @@ public class AppManagerAdapter extends BaseAdapter {
             return tv_user;
         }else {
 
-            if (convertView==null||convertView instanceof TextView){
+            if (convertView==null||convertView instanceof TextView || position==mInstallSystemAppBeans.size()+2){//position==mInstallSystemAppBeans.size()+2使该位置能被点击
                 convertView = View.inflate(mContext, R.layout.item_app_manager,null);
             }
             ImageView iv_icon_app = convertView.findViewById(R.id.iv_icon_app);
@@ -102,4 +103,5 @@ public class AppManagerAdapter extends BaseAdapter {
             return convertView;
         }
     }
+
 }

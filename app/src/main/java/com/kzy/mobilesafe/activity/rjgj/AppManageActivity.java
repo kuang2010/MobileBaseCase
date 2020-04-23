@@ -7,12 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -47,7 +48,7 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
     private List<InstallAppBean> mInstallUserAppsInfo=new ArrayList<>();//应用APP
     private AppManagerAdapter mManagerAdapter;
     private RelativeLayout mRl_app_data;
-    private TextView mTv_user;
+    private TextView mTv_ticket;
     private PopupWindow mPopupWindow;
     private InstallAppBean clickInstallAppBean;
     private AppUnInstallReceiver mAppUnInstallReceiver;
@@ -75,9 +76,9 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
 
     //卸载完成的广播接收者
     class AppUnInstallReceiver extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
+            //卸载app完成
             initData();
         }
     }
@@ -115,9 +116,9 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem<mInstallSystemAppsInfo.size()+1){
-                    mTv_user.setText("系统软件("+mInstallSystemAppsInfo.size()+")");
+                    mTv_ticket.setText("系统软件("+mInstallSystemAppsInfo.size()+")");
                 }else{
-                    mTv_user.setText("应用软件("+mInstallUserAppsInfo.size()+")");
+                    mTv_ticket.setText("应用软件("+mInstallUserAppsInfo.size()+")");
                 }
             }
         });
@@ -125,12 +126,17 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
         mLv_app_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0 ||position==mInstallSystemAppsInfo.size()+1){
+                    //是标签
+                    return;
+                }
                 mPopupWindow.showAsDropDown(view, DensityUtil.dip2px(AppManageActivity.this,65),-(view.getHeight()));
                 if (position<=mInstallSystemAppsInfo.size()){
                     clickInstallAppBean = mInstallSystemAppsInfo.get(position-1);
                 }else {
                     clickInstallAppBean = mInstallUserAppsInfo.get(position-mInstallSystemAppsInfo.size()-2);
                 }
+
             }
         });
     }
@@ -160,18 +166,18 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
                 case LOADING:
                     mLayout_load.setVisibility(View.VISIBLE);
                     mLv_app_data.setVisibility(View.GONE);
-                    mTv_user.setVisibility(View.GONE);
+                    mTv_ticket.setVisibility(View.GONE);
                     break;
                 case LOADFINISH:
                     mLayout_load.setVisibility(View.GONE);
                     mLv_app_data.setVisibility(View.VISIBLE);
-                    mTv_user.setVisibility(View.VISIBLE);
+                    mTv_ticket.setVisibility(View.VISIBLE);
                     mManagerAdapter.setSystemAppBeans(mInstallSystemAppsInfo);
                     mManagerAdapter.setUserAppBeans(mInstallUserAppsInfo);
-                    mTv_user.setText("系统软件("+mInstallSystemAppsInfo.size()+")");
+                    mTv_ticket.setText("系统软件("+mInstallSystemAppsInfo.size()+")");
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    mRl_app_data.removeView(mTv_user);
-                    mRl_app_data.addView(mTv_user,layoutParams);
+                    mRl_app_data.removeView(mTv_ticket);
+                    mRl_app_data.addView(mTv_ticket,layoutParams);
                     break;
             }
 
@@ -206,9 +212,10 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
         mLv_app_data = findViewById(R.id.lv_app_data);
         mLayout_load = findViewById(R.id.layout_load);
         mRl_app_data = findViewById(R.id.rl_app_data);
-        mTv_user = new TextView(this);
-        mTv_user.setTextSize(20);
-        mTv_user.setBackgroundColor(Color.GRAY);
+        mTv_ticket = new TextView(this);
+        mTv_ticket.setTextSize(20);
+        mTv_ticket.setBackgroundColor(Color.GRAY);
+        mTv_ticket.setClickable(true);//抢占点击事件，不让用户点到真实的标签
     }
 
     @Override
