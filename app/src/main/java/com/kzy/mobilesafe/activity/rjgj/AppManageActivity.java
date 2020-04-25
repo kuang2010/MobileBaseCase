@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +32,13 @@ import com.kzy.mobilesafe.utils.AppInfoUtil;
 import com.kzy.mobilesafe.utils.DensityUtil;
 import com.kzy.mobilesafe.utils.PhoneUtil;
 import com.kzy.mobilesafe.view.MemoryProgressBar;
+import com.mob.MobSDK;
+import com.mob.OperationCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class AppManageActivity extends Activity implements View.OnClickListener {
 
@@ -62,6 +67,18 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
         initEvent();
         initPopuWindow();
         registerReceiver();
+
+        MobSDK.submitPolicyGrantResult(true, new OperationCallback<Void>() {
+            @Override
+            public void onComplete(Void aVoid) {
+                Log.d("tagtag","onComplete");
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                Log.d("tagtag","onFailure");
+            }
+        });
     }
 
     private void registerReceiver() {
@@ -231,12 +248,44 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
                 break;
             case R.id.ll_share_appmanager:
                 //分享
+                share();
                 break;
             case R.id.ll_setting_appmanager:
                 //设置
+                toAppInfoSetting(clickInstallAppBean.getPackageName());
                 break;
         }
         mPopupWindow.dismiss();
+    }
+
+    /**
+     * 分享
+     */
+    private void share() {
+//java
+        OnekeyShare oks = new OnekeyShare();
+// title标题，微信、QQ和QQ空间等平台使用
+        oks.setTitle("分享的标题");
+// titleUrl QQ和QQ空间跳转链接
+        oks.setTitleUrl("http://sharesdk.cn");
+// text是分享文本，所有平台都需要这个字段
+        oks.setText("我是分享文本");
+// imagePath是图片的本地路径，确保SDcard下面存在此张图片
+        oks.setImagePath("/sdcard/tp2.jpg");
+// url在微信、Facebook等平台中使用
+        oks.setUrl("https://www.baidu.com");
+// 启动分享GUI
+        oks.show(MobSDK.getContext());
+    }
+
+    /**
+     * 跳转到APP详情信息页面
+     * @param packageName
+     */
+    private void toAppInfoSetting(String packageName) {
+       Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
+       intent.setData(Uri.parse("package:"+packageName));
+       startActivity(intent);
     }
 
     /**

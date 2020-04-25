@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 29
@@ -37,6 +38,37 @@ android {
 
     configurations.all {
         resolutionStrategy.force 'com.android.support:support-annotations:27.1.1'
+    }
+}
+
+MobSDK {
+    appKey "m2ef3a0362eab0"
+    appSecret "fff9158d24ad831c79426e3c99414b5b"
+    ShareSDK {
+        //平台配置信息
+        devInfo {
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            QQ {
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
+                shareByAppClient true
+            }
+            Facebook {
+                appKey "1412473428822331"
+                appSecret "a42f4f3f867dc947b9ed6020c2e93558"
+                callbackUri "https://mob.com"
+            }
+            SinaWeibo {
+                appKey "2744925734"
+                appSecret "4a405ec1451b31b82a6b505e868dcba2"
+                callbackUri "http://www.sharesdk.cn"
+                shareByAppClient true
+            }
+        }
+
     }
 }
 
