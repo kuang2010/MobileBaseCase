@@ -16,7 +16,7 @@ public class Md5Util {
         try {
             MessageDigest md5 = MessageDigest.getInstance("md5");
             byte[] digest = md5.digest(src.getBytes());
-            //将字节数组转成十六进制表示的字符串
+            //以下是：将字节数组转成十六进制表示的字符串
             for (byte dt : digest){
                 //将字节或int数据转成十六进制表示
                 //String hex = Integer.toHexString(dt);//ffffffae,ffffff58,e3,5
