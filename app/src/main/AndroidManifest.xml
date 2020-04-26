@@ -83,6 +83,22 @@
         <service android:name=".activity.service.FindPhoneService" />
         <service android:name=".activity.service.BlackInterceptService" />
         <service android:name=".activity.service.ShowPhoneLoactionService" />
+
+        <receiver android:name=".widget.ClearRunningAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/process_widget_provider" />
+        </receiver>
+
+        <service android:name=".widget.ClearRunningAppWidgeterService"/>
+        <receiver android:name=".widget.ClearTaskReceiver">
+            <intent-filter>
+                <action android:name="widget.clear.task"/>
+            </intent-filter>
+        </receiver>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

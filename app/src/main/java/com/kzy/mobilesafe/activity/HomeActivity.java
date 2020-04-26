@@ -210,6 +210,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             Intent intent2 = new Intent(this,FindPhoneService.class);
             this.startService(intent2);
         }
+
     }
 
     private void initView() {
