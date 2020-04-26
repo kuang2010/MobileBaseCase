@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.jcgl.ProcessTaskManagerAcitivity"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/setup_title_style"
+        android:text="进程管理"/>
+    <com.kzy.mobilesafe.view.MemoryProgressBar
+        android:id="@+id/pb_process_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"/>
+    <com.kzy.mobilesafe.view.MemoryProgressBar
+        android:id="@+id/pb_process_memory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ProgressBar
+                android:id="@+id/pb_load_process"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/animor_rotate_loadiing"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rv_data_process"
+                android:visibility="gone"/>
+
+            <include layout="@layout/view_item_mark_process"
+                android:id="@+id/layout_mark_process"
+                android:visibility="gone"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_select_all_runapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_dialog_btn_bg"
+                android:text="全选"/>
+            <Button
+                android:id="@+id/btn_unselect_all_runapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_dialog_btn_bg"
+                android:layout_weight="1"
+                android:text="反选"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

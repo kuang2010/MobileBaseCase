@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.activity.gjgj.AToolHomeActivity;
+import com.kzy.mobilesafe.activity.jcgl.ProcessTaskManagerAcitivity;
 import com.kzy.mobilesafe.activity.rjgj.AppManageActivity;
 import com.kzy.mobilesafe.activity.service.FindPhoneService;
 import com.kzy.mobilesafe.activity.sjfd.SetupHomeActivity;
@@ -96,6 +97,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     case 2://软件管家
                         Intent intent_soft = new Intent(HomeActivity.this, AppManageActivity.class);
                         startActivity(intent_soft);
+                        break;
+                    case 3:
+                        {//进程管理
+                            Intent intent_task = new Intent(HomeActivity.this, ProcessTaskManagerAcitivity.class);
+                            startActivity(intent_task);
+                        }
                         break;
                 }
             }

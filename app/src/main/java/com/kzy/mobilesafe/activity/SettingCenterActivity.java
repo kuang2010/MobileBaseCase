@@ -107,6 +107,7 @@ public class SettingCenterActivity extends Activity implements ToggleView.OnTogg
                 //开启归宿地服务
 //                Intent intent = new Intent(SettingCenterActivity.this,ShowPhoneLoactionService.class);
 //                startService(intent);
+                //悬浮窗口 权限 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                 startActivityForResult(intent, 123);
             } else {

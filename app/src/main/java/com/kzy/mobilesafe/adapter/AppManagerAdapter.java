@@ -2,7 +2,7 @@ package com.kzy.mobilesafe.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kzy.mobilesafe.R;
-import com.kzy.mobilesafe.bean.InstallAppBean;
+import com.kzy.mobilesafe.bean.AppInfoBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,17 +23,17 @@ import java.util.List;
 public class AppManagerAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<InstallAppBean> mInstallSystemAppBeans;
-    private List<InstallAppBean> mInstallUserAppBeans;
+    private List<AppInfoBean> mInstallSystemAppBeans;
+    private List<AppInfoBean> mInstallUserAppBeans;
     private View.OnClickListener onItemClickListener;
     public AppManagerAdapter(Context context){
         mContext = context;
     }
-    public void setSystemAppBeans(List<InstallAppBean> installSystemAppBeans){
+    public void setSystemAppBeans(List<AppInfoBean> installSystemAppBeans){
         mInstallSystemAppBeans = installSystemAppBeans;
         notifyDataSetChanged();
     }
-    public void setUserAppBeans(List<InstallAppBean> installUserAppBeans){
+    public void setUserAppBeans(List<AppInfoBean> installUserAppBeans){
         mInstallUserAppBeans = installUserAppBeans;
         notifyDataSetChanged();
     }
@@ -73,33 +72,33 @@ public class AppManagerAdapter extends BaseAdapter {
             tv_system.setText("系统软件("+mInstallSystemAppBeans.size()+")");
             tv_system.setTextSize(20);
             tv_system.setBackgroundColor(Color.GRAY);
-            return tv_system;
+            return tv_system;//为啥不用设置layoutParam,也能填充宽度??? listview添加itemview使用的layoutparam是ViewGroup.layoutparam
         }else if (position==mInstallSystemAppBeans.size()+1){
             //应用软件标签
             TextView tv_user = new TextView(mContext);
             tv_user.setText("应用软件("+mInstallUserAppBeans.size()+")");
             tv_user.setTextSize(20);
             tv_user.setBackgroundColor(Color.GRAY);
-            return tv_user;
+            return tv_user;//为啥不用设置layoutParam,也能填充宽度??? listview添加itemview使用的layoutparam是ViewGroup.layoutparam
         }else {
 
             if (convertView==null||convertView instanceof TextView || position==mInstallSystemAppBeans.size()+2){//position==mInstallSystemAppBeans.size()+2使该位置能被点击
-                convertView = View.inflate(mContext, R.layout.item_app_manager,null);
+                convertView = View.inflate(mContext, R.layout.item_app_manager,null);//root 为null，布局的最外层属性会部分失效，如layout_width="200dp"。即使有root,由于listview使用的是ViewGroup的LayoutParam来添加item，所以最外层的marginLeft等属性也会失效
             }
             ImageView iv_icon_app = convertView.findViewById(R.id.iv_icon_app);
             TextView tv_name_app = convertView.findViewById(R.id.tv_name_app);
             TextView tv_path_app = convertView.findViewById(R.id.tv_path_app);
             TextView tv_size_app = convertView.findViewById(R.id.tv_size_app);
-            InstallAppBean installAppBean;
+            AppInfoBean appInfoBean;
             if (position<=mInstallSystemAppBeans.size()){
-                installAppBean = mInstallSystemAppBeans.get(position-1);
+                appInfoBean = mInstallSystemAppBeans.get(position-1);
             }else {
-                installAppBean = mInstallUserAppBeans.get(position-mInstallSystemAppBeans.size()-2);
+                appInfoBean = mInstallUserAppBeans.get(position-mInstallSystemAppBeans.size()-2);
             }
-            iv_icon_app.setImageDrawable(installAppBean.getIcon());
-            tv_name_app.setText(installAppBean.getAppName());
-            tv_path_app.setText(installAppBean.getInstallPath());
-            tv_size_app.setText(installAppBean.getMemSize());
+            iv_icon_app.setImageDrawable(appInfoBean.getIcon());
+            tv_name_app.setText(appInfoBean.getAppName());
+            tv_path_app.setText(appInfoBean.getInstallPath());
+            tv_size_app.setText(appInfoBean.getMemSize());
             return convertView;
         }
     }

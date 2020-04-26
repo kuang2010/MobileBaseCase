@@ -17,7 +17,7 @@
         android:id="@+id/iv_switch_toggle_view"
         android:layout_width="30dp"
         android:layout_height="20dp"
-        android:src="@mipmap/off"
+        android:src="@drawable/off"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
 </RelativeLayout>

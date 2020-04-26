@@ -47,9 +47,9 @@ public class ToggleView extends RelativeLayout {
             public void onClick(View v) {
                 toggleStateIsOpen = !toggleStateIsOpen;
                 if (toggleStateIsOpen){
-                    mIvSwitchToggleView.setImageResource(R.mipmap.on);
+                    mIvSwitchToggleView.setImageResource(R.drawable.on);
                 }else {
-                    mIvSwitchToggleView.setImageResource(R.mipmap.off);
+                    mIvSwitchToggleView.setImageResource(R.drawable.off);
                 }
 
                 if (mOnToggleStateChangeListener!=null){
@@ -115,9 +115,9 @@ public class ToggleView extends RelativeLayout {
     public void setToggleState(boolean open){
         toggleStateIsOpen = open;
         if (toggleStateIsOpen){
-            mIvSwitchToggleView.setImageResource(R.mipmap.on);
+            mIvSwitchToggleView.setImageResource(R.drawable.on);
         }else {
-            mIvSwitchToggleView.setImageResource(R.mipmap.off);
+            mIvSwitchToggleView.setImageResource(R.drawable.off);
         }
     }
 

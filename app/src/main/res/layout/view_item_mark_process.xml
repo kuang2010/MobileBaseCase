@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:background="#888888"
+    android:clickable="true">
+    <TextView
+        android:id="@+id/tv_mark_process"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tv_mark_process"
+        android:textSize="18sp"
+        android:textColor="#ffffff"/>
+    <ImageView
+        android:clickable="true"
+        android:id="@+id/iv_clean_run_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/selector_clean_runningapp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"/>
+</RelativeLayout>

@@ -16,6 +16,7 @@
         android:layout_toRightOf="@id/iv_icon_app"
         android:layout_marginLeft="20dp"
         android:layout_alignTop="@id/iv_icon_app"
+        android:text="appname"
         android:id="@+id/tv_name_app"/>
 
     <TextView
@@ -28,10 +29,29 @@
         android:singleLine="true"
         android:ellipsize="end"/>
 
-    <TextView
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:id="@+id/tv_size_app"/>
+        android:layout_marginRight="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_size_app"/>
+        <CheckBox
+            android:clickable="false"
+            android:focusable="false"
+            android:layout_width="35dp"
+            android:layout_height="25dp"
+            android:id="@+id/cb_clear_process_app"
+            android:button="@null"
+            android:background="@drawable/selector_checkbox_clear_runningapp"
+            android:visibility="gone"/>
+        <!-- android:clickable="false"
+        android:focusable="false"
+        把点击交给recycleview去处理-->
+
+
+    </FrameLayout>
+
 </RelativeLayout>

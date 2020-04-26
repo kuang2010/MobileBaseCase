@@ -1,10 +1,16 @@
 package com.kzy.mobilesafe.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.media.audiofx.PresetReverb;
 import android.os.Environment;
 import android.text.format.Formatter;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * author: kuangzeyu2019
@@ -63,5 +69,19 @@ public class PhoneUtil {
      */
     public static String formatFileSize(Context context ,long sizeBylte){
         return  Formatter.formatFileSize(context,sizeBylte);
+    }
+
+    /**
+     * 判断设备上是否有某个页面
+     * @param context
+     * @param intent 页面注册时的intent-filter
+     * @return
+     */
+    public static boolean hasActivity(Context context,Intent intent){
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+//        ResolveInfo resolveInfo = resolveInfos.get(0);
+//        ApplicationInfo appInfo = resolveInfo.activityInfo.applicationInfo;
+        return resolveInfos.size()>0;
     }
 }

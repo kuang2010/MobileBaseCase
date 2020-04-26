@@ -7,14 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -27,7 +26,7 @@ import android.widget.Toast;
 
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.adapter.AppManagerAdapter;
-import com.kzy.mobilesafe.bean.InstallAppBean;
+import com.kzy.mobilesafe.bean.AppInfoBean;
 import com.kzy.mobilesafe.utils.AppInfoUtil;
 import com.kzy.mobilesafe.utils.DensityUtil;
 import com.kzy.mobilesafe.utils.PhoneUtil;
@@ -48,14 +47,14 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
     private MemoryProgressBar mPb_memory_sdcard;
     private ListView mLv_app_data;
     private View mLayout_load;
-    private List<InstallAppBean> mInstallAppsInfo;
-    private List<InstallAppBean> mInstallSystemAppsInfo=new ArrayList<>();//系统APP
-    private List<InstallAppBean> mInstallUserAppsInfo=new ArrayList<>();//应用APP
+    private List<AppInfoBean> mInstallAppsInfo;
+    private List<AppInfoBean> mInstallSystemAppsInfo=new ArrayList<>();//系统APP
+    private List<AppInfoBean> mInstallUserAppsInfo=new ArrayList<>();//应用APP
     private AppManagerAdapter mManagerAdapter;
     private RelativeLayout mRl_app_data;
     private TextView mTv_ticket;
     private PopupWindow mPopupWindow;
-    private InstallAppBean clickInstallAppBean;
+    private AppInfoBean mClickAppInfoBean;
     private AppUnInstallReceiver mAppUnInstallReceiver;
 
     @Override
@@ -149,9 +148,9 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
                 }
                 mPopupWindow.showAsDropDown(view, DensityUtil.dip2px(AppManageActivity.this,65),-(view.getHeight()));
                 if (position<=mInstallSystemAppsInfo.size()){
-                    clickInstallAppBean = mInstallSystemAppsInfo.get(position-1);
+                    mClickAppInfoBean = mInstallSystemAppsInfo.get(position-1);
                 }else {
-                    clickInstallAppBean = mInstallUserAppsInfo.get(position-mInstallSystemAppsInfo.size()-2);
+                    mClickAppInfoBean = mInstallUserAppsInfo.get(position-mInstallSystemAppsInfo.size()-2);
                 }
 
             }
@@ -206,15 +205,15 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
             public void run() {
                 super.run();
                 mHandler.obtainMessage(LOADING).sendToTarget();
-                mInstallAppsInfo = AppInfoUtil.getInstallAppsInfo(getApplicationContext());
+                mInstallAppsInfo = AppInfoUtil.getAllAppsInfos(getApplicationContext());
                 //分类
                 mInstallSystemAppsInfo.clear();
                 mInstallUserAppsInfo.clear();
-                for (InstallAppBean installAppBean:mInstallAppsInfo){
-                    if (installAppBean.isSystemApp()){
-                        mInstallSystemAppsInfo.add(installAppBean);
+                for (AppInfoBean appInfoBean :mInstallAppsInfo){
+                    if (appInfoBean.isSystemApp()){
+                        mInstallSystemAppsInfo.add(appInfoBean);
                     }else {
-                        mInstallUserAppsInfo.add(installAppBean);
+                        mInstallUserAppsInfo.add(appInfoBean);
                     }
                 }
                 SystemClock.sleep(1000);
@@ -240,11 +239,11 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
         switch (v.getId()){
             case R.id.ll_uninstall_appmanager:
                 //卸载
-                uninstallApp(clickInstallAppBean.getPackageName());
+                uninstallApp(mClickAppInfoBean.getPackageName());
                 break;
             case R.id.ll_launch_appmanager:
                 //启动
-                startApp(clickInstallAppBean.getPackageName());
+                startApp(mClickAppInfoBean.getPackageName());
                 break;
             case R.id.ll_share_appmanager:
                 //分享
@@ -252,7 +251,7 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
                 break;
             case R.id.ll_setting_appmanager:
                 //设置
-                toAppInfoSetting(clickInstallAppBean.getPackageName());
+                toAppInfoSetting(mClickAppInfoBean.getPackageName());
                 break;
         }
         mPopupWindow.dismiss();
@@ -279,11 +278,11 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
     }
 
     /**
-     * 跳转到APP详情信息页面
+     * 跳转到APP详情信息设置页面
      * @param packageName
      */
     private void toAppInfoSetting(String packageName) {
-       Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
+       Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
        intent.setData(Uri.parse("package:"+packageName));
        startActivity(intent);
     }
@@ -306,7 +305,7 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
      * @param packageName
      */
     private void uninstallApp(String packageName) {
-        if (clickInstallAppBean.isSystemApp()){
+        if (mClickAppInfoBean.isSystemApp()){
 
         }else {
             Intent intent = new Intent("android.intent.action.DELETE");

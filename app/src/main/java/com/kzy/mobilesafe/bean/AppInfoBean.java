@@ -8,13 +8,33 @@ import android.graphics.drawable.Drawable;
  * time: 9:18
  * desc:
  */
-public class InstallAppBean {
+public class AppInfoBean {
     private String appName;
     private String packageName;
     private String installPath;
     private Drawable icon;
-    private String memSize;//占用内存大小
+    private String memSize;//占用存储或内存大小 byte
     private boolean isSystemApp;//是否是系统APP
+    private boolean isMark;//是否是标签
+    private boolean isCheck;
+
+    public boolean isCheck() {
+        return isCheck;
+
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
+    public boolean isMark() {
+        return isMark;
+
+    }
+
+    public void setMark(boolean mark) {
+        isMark = mark;
+    }
 
     public boolean isSystemApp() {
         return isSystemApp;
@@ -72,13 +92,15 @@ public class InstallAppBean {
 
     @Override
     public String toString() {
-        return "InstallAppBean{" +
+        return "AppInfoBean{" +
                 "appName='" + appName + '\'' +
                 ", packageName='" + packageName + '\'' +
                 ", installPath='" + installPath + '\'' +
                 ", icon=" + icon +
                 ", memSize='" + memSize + '\'' +
                 ", isSystemApp=" + isSystemApp +
+                ", isMark=" + isMark +
+                ", isCheck=" + isCheck +
                 '}';
     }
 }
