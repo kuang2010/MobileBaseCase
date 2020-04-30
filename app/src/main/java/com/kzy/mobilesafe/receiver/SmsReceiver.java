@@ -1,9 +1,7 @@
 package com.kzy.mobilesafe.receiver;
 
-import android.annotation.SuppressLint;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,7 +17,7 @@ import android.widget.Toast;
 
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
-import com.kzy.mobilesafe.db.BlackDao;
+import com.kzy.mobilesafe.dao.BlackDao;
 import com.kzy.mobilesafe.db.BlackDb;
 import com.kzy.mobilesafe.utils.ServiceUtil;
 import com.kzy.mobilesafe.utils.SpUtil;

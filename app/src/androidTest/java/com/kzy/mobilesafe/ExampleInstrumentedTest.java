@@ -5,9 +5,9 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.kzy.mobilesafe.bean.BlackBean;
-import com.kzy.mobilesafe.db.BlackDao;
+import com.kzy.mobilesafe.dao.BlackDao;
 import com.kzy.mobilesafe.db.BlackDb;
-import com.kzy.mobilesafe.db.TelAddressDao;
+import com.kzy.mobilesafe.dao.TelAddressDao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

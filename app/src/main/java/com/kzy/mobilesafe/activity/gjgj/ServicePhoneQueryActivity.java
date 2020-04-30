@@ -7,12 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ListAdapter;
 
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.adapter.MyExpendAdapter;
 import com.kzy.mobilesafe.bean.ServicePhoneBean;
-import com.kzy.mobilesafe.db.ServicePhoneDao;
+import com.kzy.mobilesafe.dao.ServicePhoneDao;
 
 /**
  * 服务号码查询页

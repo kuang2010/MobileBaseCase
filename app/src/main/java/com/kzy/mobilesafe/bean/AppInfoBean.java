@@ -16,7 +16,32 @@ public class AppInfoBean {
     private String memSize;//占用存储或内存大小 byte
     private boolean isSystemApp;//是否是系统APP
     private boolean isMark;//是否是标签
-    private boolean isCheck;
+    private boolean isCheck;//进程管理中是否被选上了
+    private boolean isVirus;//是否是病毒
+
+    @Override
+    public String toString() {
+        return "AppInfoBean{" +
+                "appName='" + appName + '\'' +
+                ", packageName='" + packageName + '\'' +
+                ", installPath='" + installPath + '\'' +
+                ", icon=" + icon +
+                ", memSize='" + memSize + '\'' +
+                ", isSystemApp=" + isSystemApp +
+                ", isMark=" + isMark +
+                ", isCheck=" + isCheck +
+                ", isVirus=" + isVirus +
+                '}';
+    }
+
+    public boolean isVirus() {
+        return isVirus;
+
+    }
+
+    public void setVirus(boolean virus) {
+        isVirus = virus;
+    }
 
     public boolean isCheck() {
         return isCheck;
@@ -90,17 +115,4 @@ public class AppInfoBean {
         this.memSize = memSize;
     }
 
-    @Override
-    public String toString() {
-        return "AppInfoBean{" +
-                "appName='" + appName + '\'' +
-                ", packageName='" + packageName + '\'' +
-                ", installPath='" + installPath + '\'' +
-                ", icon=" + icon +
-                ", memSize='" + memSize + '\'' +
-                ", isSystemApp=" + isSystemApp +
-                ", isMark=" + isMark +
-                ", isCheck=" + isCheck +
-                '}';
-    }
 }

@@ -31,13 +31,10 @@ import com.kzy.mobilesafe.utils.AppInfoUtil;
 import com.kzy.mobilesafe.utils.DensityUtil;
 import com.kzy.mobilesafe.utils.PhoneUtil;
 import com.kzy.mobilesafe.view.MemoryProgressBar;
-import com.mob.MobSDK;
-import com.mob.OperationCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class AppManageActivity extends Activity implements View.OnClickListener {
 
@@ -66,18 +63,6 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
         initEvent();
         initPopuWindow();
         registerReceiver();
-
-        MobSDK.submitPolicyGrantResult(true, new OperationCallback<Void>() {
-            @Override
-            public void onComplete(Void aVoid) {
-                Log.d("tagtag","onComplete");
-            }
-
-            @Override
-            public void onFailure(Throwable throwable) {
-                Log.d("tagtag","onFailure");
-            }
-        });
     }
 
     private void registerReceiver() {
@@ -247,7 +232,7 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
                 break;
             case R.id.ll_share_appmanager:
                 //分享
-                share();
+//                share();
                 break;
             case R.id.ll_setting_appmanager:
                 //设置
@@ -260,7 +245,7 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
     /**
      * 分享
      */
-    private void share() {
+    /*private void share() {
 //java
         OnekeyShare oks = new OnekeyShare();
 // title标题，微信、QQ和QQ空间等平台使用
@@ -275,7 +260,7 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
         oks.setUrl("https://www.baidu.com");
 // 启动分享GUI
         oks.show(MobSDK.getContext());
-    }
+    }*/
 
     /**
      * 跳转到APP详情信息设置页面

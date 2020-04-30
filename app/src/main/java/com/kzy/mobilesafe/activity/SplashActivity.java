@@ -78,6 +78,7 @@ public class SplashActivity extends BaseActivity {
 
         copyDbToDirectory("address.db");
         copyDbToDirectory("commonnum.db");
+        copyDbToDirectory("antivirus.db");
     }
 
     /**

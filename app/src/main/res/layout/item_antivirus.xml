@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="15dp">
+    <ImageView
+        android:id="@+id/iv_icon_antivirus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/rjgj"/>
+
+    <TextView
+        android:id="@+id/tv_name_antivirus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_icon_antivirus"
+        android:layout_marginLeft="20dp"
+        android:text="appname"
+        android:layout_centerVertical="true"/>
+
+    <ImageView
+        android:id="@+id/iv_is_virus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/check_status_green"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

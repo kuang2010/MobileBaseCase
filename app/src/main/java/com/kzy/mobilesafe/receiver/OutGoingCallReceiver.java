@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.kzy.mobilesafe.db.TelAddressDao;
+import com.kzy.mobilesafe.dao.TelAddressDao;
 import com.kzy.mobilesafe.view.MyToast;
 
 /**

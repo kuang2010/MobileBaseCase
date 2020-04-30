@@ -1,4 +1,4 @@
-package com.kzy.mobilesafe.db;
+package com.kzy.mobilesafe.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.kzy.mobilesafe.bean.BlackBean;
+import com.kzy.mobilesafe.db.BlackDb;
 
 import java.util.ArrayList;
 import java.util.List;

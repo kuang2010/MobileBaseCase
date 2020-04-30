@@ -1,6 +1,5 @@
 package com.kzy.mobilesafe.activity.service;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,8 +18,7 @@ import android.widget.Toast;
 
 import com.android.internal.telephony.ITelephony;
 import com.kzy.mobilesafe.R;
-import com.kzy.mobilesafe.activity.HomeActivity;
-import com.kzy.mobilesafe.db.BlackDao;
+import com.kzy.mobilesafe.dao.BlackDao;
 import com.kzy.mobilesafe.db.BlackDb;
 import com.kzy.mobilesafe.receiver.SmsReceiver;
 

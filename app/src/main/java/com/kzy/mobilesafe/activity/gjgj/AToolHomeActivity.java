@@ -10,7 +10,7 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
-import com.kzy.mobilesafe.db.TelAddressDao;
+import com.kzy.mobilesafe.dao.TelAddressDao;
 import com.kzy.mobilesafe.utils.EncodeUtils;
 import com.kzy.mobilesafe.view.ToggleView;
 
@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.List;
 

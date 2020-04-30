@@ -2,12 +2,9 @@ package com.kzy.mobilesafe.activity.txws;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,7 +27,7 @@ import android.widget.Toast;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.adapter.BlackAdapter;
 import com.kzy.mobilesafe.bean.BlackBean;
-import com.kzy.mobilesafe.db.BlackDao;
+import com.kzy.mobilesafe.dao.BlackDao;
 import com.kzy.mobilesafe.db.BlackDb;
 
 import java.util.List;

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
+import com.kzy.mobilesafe.activity.bdcs.AntiVirusActivity;
 import com.kzy.mobilesafe.activity.gjgj.AToolHomeActivity;
 import com.kzy.mobilesafe.activity.jcgl.ProcessTaskManagerAcitivity;
 import com.kzy.mobilesafe.activity.rjgj.AppManageActivity;
@@ -103,6 +104,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                             Intent intent_task = new Intent(HomeActivity.this, ProcessTaskManagerAcitivity.class);
                             startActivity(intent_task);
                         }
+                        break;
+                    case 5://病毒查杀
+                        Intent intent_antivirus = new Intent(HomeActivity.this, AntiVirusActivity.class);
+                        startActivity(intent_antivirus);
                         break;
                 }
             }

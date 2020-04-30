@@ -10,14 +10,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kzy.mobilesafe.R;
-import com.kzy.mobilesafe.db.TelAddressDao;
+import com.kzy.mobilesafe.dao.TelAddressDao;
 
 /**
  * 电话归属地查询

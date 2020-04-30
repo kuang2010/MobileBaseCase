@@ -1,7 +1,7 @@
 package com.kzy.mobilesafe;
 
 
-import com.kzy.mobilesafe.db.TelAddressDao;
+import com.kzy.mobilesafe.dao.TelAddressDao;
 
 import org.junit.Test;
 

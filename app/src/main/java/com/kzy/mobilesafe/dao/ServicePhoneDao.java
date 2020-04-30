@@ -1,4 +1,4 @@
-package com.kzy.mobilesafe.db;
+package com.kzy.mobilesafe.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
