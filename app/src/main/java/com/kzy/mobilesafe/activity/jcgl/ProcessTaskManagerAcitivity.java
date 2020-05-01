@@ -22,7 +22,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kzy.mobilesafe.R;
-import com.kzy.mobilesafe.activity.HomeActivity;
 import com.kzy.mobilesafe.adapter.RuningAppManagerAdapter;
 import com.kzy.mobilesafe.bean.AppInfoBean;
 import com.kzy.mobilesafe.utils.AppInfoUtil;
@@ -67,7 +66,7 @@ public class ProcessTaskManagerAcitivity extends Activity implements View.OnClic
         tools:ignore="ProtectedPermissions" />
         * */
         if (isNoOption()){
-            if (!isNoSwitch()){
+            if (!isOnSwitch()){
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                 startActivity(intent);
                 finish();
@@ -93,7 +92,7 @@ public class ProcessTaskManagerAcitivity extends Activity implements View.OnClic
      * 判断有权查看使用情况的应用程序的权限是否开启
      * @return
      */
-    private boolean isNoSwitch() {
+    private boolean isOnSwitch() {
         long ts = System.currentTimeMillis();
         UsageStatsManager usageStatsManager = (UsageStatsManager) getApplicationContext()
                 .getSystemService("usagestats");

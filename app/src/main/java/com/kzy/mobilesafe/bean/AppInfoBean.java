@@ -13,11 +13,12 @@ public class AppInfoBean {
     private String packageName;
     private String installPath;
     private Drawable icon;
-    private String memSize;//占用存储或内存大小 byte
+    private String memSize;//安装apk占用存储空间或运行时app占用内存大小 byte
     private boolean isSystemApp;//是否是系统APP
     private boolean isMark;//是否是标签
     private boolean isCheck;//进程管理中是否被选上了
     private boolean isVirus;//是否是病毒
+    private long cacheSize;//产生的文件资源占用缓存空间大小 byte
 
     @Override
     public String toString() {
@@ -31,7 +32,17 @@ public class AppInfoBean {
                 ", isMark=" + isMark +
                 ", isCheck=" + isCheck +
                 ", isVirus=" + isVirus +
+                ", cacheSize=" + cacheSize +
                 '}';
+    }
+
+    public long getCacheSize() {
+        return cacheSize;
+
+    }
+
+    public void setCacheSize(long cacheSize) {
+        this.cacheSize = cacheSize;
     }
 
     public boolean isVirus() {

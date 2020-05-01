@@ -30,8 +30,11 @@ public class AntiVirusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setData(List<AppInfoBean> scanAppInfo){
         mScanAppInfo.clear();
         notifyDataSetChanged();
-        mScanAppInfo.addAll(scanAppInfo);
-        notifyDataSetChanged();
+        if (scanAppInfo!=null&&scanAppInfo.size()>0){
+            mScanAppInfo.addAll(scanAppInfo);
+            notifyDataSetChanged();
+        }
+
     }
 
     public AntiVirusAdapter(Context context){

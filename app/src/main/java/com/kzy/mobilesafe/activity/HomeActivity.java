@@ -3,8 +3,11 @@ package com.kzy.mobilesafe.activity;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.AlertDialog;
+import android.app.usage.StorageStatsManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +24,7 @@ import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.activity.bdcs.AntiVirusActivity;
 import com.kzy.mobilesafe.activity.gjgj.AToolHomeActivity;
+import com.kzy.mobilesafe.activity.hcql.AppCacheClearActivity;
 import com.kzy.mobilesafe.activity.jcgl.ProcessTaskManagerAcitivity;
 import com.kzy.mobilesafe.activity.rjgj.AppManageActivity;
 import com.kzy.mobilesafe.activity.service.FindPhoneService;
@@ -41,7 +45,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private GridView mGvFunction;
     private ArrayList<FuntionBean> mFuntionBeans;
     private HomeFunctionAdapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         initData();
         initEvent();
         initAnimator();
-
 
     }
 
@@ -108,6 +110,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     case 5://病毒查杀
                         Intent intent_antivirus = new Intent(HomeActivity.this, AntiVirusActivity.class);
                         startActivity(intent_antivirus);
+                        break;
+                    case 6://缓存清理
+                        Intent intent_cache = new Intent(HomeActivity.this, AppCacheClearActivity.class);
+                        startActivity(intent_cache);
                         break;
                 }
             }

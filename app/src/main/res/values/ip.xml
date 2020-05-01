@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="virus_version_url">http://172.20.10.8:8080/MobileSafe13/servlet/version</string>
-    <string name="virus_update_url">http://172.20.10.8:8080/MobileSafe13/servlet/virusdata</string>
+    <string name="virus_version_url">http://192.168.2.140:8080/MobileSafe13/servlet/version</string>
+    <string name="virus_update_url">http://192.168.2.140:8080/MobileSafe13/servlet/virusdata</string>
 </resources>

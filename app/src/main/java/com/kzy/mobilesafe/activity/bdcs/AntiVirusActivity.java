@@ -44,6 +44,9 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 病毒查杀
+ */
 public class AntiVirusActivity extends Activity {
 
     private LinearLayout mLl_scanning_progress_antivirus;
@@ -429,8 +432,8 @@ public class AntiVirusActivity extends Activity {
             @Override
             public void run() {
                 super.run();
-                mHandler.obtainMessage(STARTSCAN).sendToTarget();
                 List<AppInfoBean> allAppsInfos = AppInfoUtil.getAllAppsInfos(AntiVirusActivity.this);
+                mHandler.obtainMessage(STARTSCAN).sendToTarget();
                 int count=0;
                 for (AppInfoBean appInfoBean:allAppsInfos){
                     if (interruptScaning) {

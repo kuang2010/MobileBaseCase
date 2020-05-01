@@ -1,12 +1,14 @@
 package com.kzy.mobilesafe.utils;
 
 import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Binder;
 import android.text.format.Formatter;
 
 import com.kzy.mobilesafe.bean.AppInfoBean;
@@ -17,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,8 +92,14 @@ public class AppInfoUtil {
         return appInfoBeans;
     }
 
+    /**
+     * UsageStatsManager 获取近段时间打开过的APP
+     * @param context
+     * @return
+     */
     public static List<AppInfoBean> getRunningAppProcesses2(Context context){
         List<AppInfoBean> appInfoBeans = new ArrayList<>();
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         UsageStatsManager um = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> usageStats = um.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY, System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000, System.currentTimeMillis());
         for (UsageStats us: usageStats){
@@ -103,8 +112,11 @@ public class AppInfoUtil {
                 appInfoBean.setIcon(appInfo.loadIcon(pm));
                 appInfoBean.setPackageName(packageName);
                 appInfoBean.setInstallPath(appInfo.sourceDir);
-                //占用内存
-                appInfoBean.setMemSize("xx");
+
+                //占用运行内存
+                android.os.Debug.MemoryInfo[] processMemoryInfo = am.getProcessMemoryInfo(new int[]{appInfo.uid});
+                appInfoBean.setMemSize(Formatter.formatFileSize(context,processMemoryInfo[0].getTotalPrivateDirty()*1024));
+
                 appInfoBean.setSystemApp((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
                 appInfoBeans.add(appInfoBean);
             } catch (PackageManager.NameNotFoundException e) {
@@ -164,5 +176,42 @@ public class AppInfoUtil {
         am.getMemoryInfo(outInfo);
         long availMem = outInfo.availMem;
         return availMem;
+    }
+
+
+    /**
+     * 判断APP是否有某种权限，适于所有版本的安卓
+     * 当 API>=23时可以用 ContextCompat:checkSelfPermission()
+     * @param context
+     * @param permissionCode AppOpsManager里对应权限的常量值
+     * @return
+     */
+    public static boolean isPermissionGranted(Context context,int permissionCode) {
+        try {
+            AppOpsManager object = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            if (object == null) {
+                return false;
+            }
+            Class localClass = object.getClass();
+            Class[] arrayOfClass = new Class[3];
+            arrayOfClass[0] = Integer.TYPE;
+            arrayOfClass[1] = Integer.TYPE;
+            arrayOfClass[2] = String.class;
+            Method method = localClass.getMethod("checkOp", arrayOfClass);
+
+            if (method == null) {
+                return false;
+            }
+            Object[] arrayOfObject = new Object[3];
+            arrayOfObject[0] = Integer.valueOf(permissionCode);
+            //arrayOfObject[1] = Integer.valueOf(Binder.getCallingUid());
+            arrayOfObject[1] = Integer.valueOf(android.os.Process.myUid());
+            arrayOfObject[2] = context.getPackageName();
+            int m = ((Integer) method.invoke(object, arrayOfObject)).intValue();
+            return m == AppOpsManager.MODE_ALLOWED;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
