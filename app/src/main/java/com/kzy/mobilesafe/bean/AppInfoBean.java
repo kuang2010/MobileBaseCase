@@ -1,6 +1,7 @@
 package com.kzy.mobilesafe.bean;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 
 /**
  * author: kuangzeyu2019
@@ -19,6 +20,27 @@ public class AppInfoBean {
     private boolean isCheck;//进程管理中是否被选上了
     private boolean isVirus;//是否是病毒
     private long cacheSize;//产生的文件资源占用缓存空间大小 byte
+    public AppInfoBean(){};
+
+    //重写equals和hashcode方便造假删除某个对象
+    public AppInfoBean(String packageName){
+        this.packageName = packageName;
+    }
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof AppInfoBean){
+            AppInfoBean o = (AppInfoBean) obj;
+            if (o.getPackageName().equals(this.getPackageName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return packageName.hashCode();
+    }
 
     @Override
     public String toString() {

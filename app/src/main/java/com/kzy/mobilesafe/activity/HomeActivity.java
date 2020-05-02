@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.usage.StorageStatsManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.storage.StorageManager;
 import android.telephony.SmsManager;
@@ -37,6 +38,7 @@ import com.kzy.mobilesafe.utils.Md5Util;
 import com.kzy.mobilesafe.utils.SpUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 

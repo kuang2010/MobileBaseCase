@@ -43,10 +43,10 @@ public class AppInfoUtil {
         for(PackageInfo packageInfo:packageInfos){
             ApplicationInfo appInfo = packageInfo.applicationInfo;
             String packageName = appInfo.packageName;
-            if (context.getPackageName().equals(packageName)){
-                //是自己
-                continue;
-            }
+//            if (context.getPackageName().equals(packageName)){
+//                //是自己
+//                continue;
+//            }
             AppInfoBean appInfoBean = new AppInfoBean();
             appInfoBeans.add(appInfoBean);
             appInfoBean.setAppName(appInfo.loadLabel(pm) + "");

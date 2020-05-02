@@ -42,21 +42,31 @@ public class AppCacheAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         return new MyViewHold(LayoutInflater.from(mContext).inflate(R.layout.item_clear_cache,viewGroup,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         ImageView iv_icon_cache = viewHolder.itemView.findViewById(R.id.iv_icon_cache);
         TextView tv_name_cache = viewHolder.itemView.findViewById(R.id.tv_name_cache);
         TextView tv_size_cache = viewHolder.itemView.findViewById(R.id.tv_size_cache);
 
-        AppInfoBean appInfoBean = mAppInfoBeans.get(i);
+        AppInfoBean appInfoBean = mAppInfoBeans.get(position);
 
         iv_icon_cache.setImageDrawable(appInfoBean.getIcon());
         tv_name_cache.setText(appInfoBean.getAppName());
         tv_size_cache.setText(Formatter.formatFileSize(mContext,appInfoBean.getCacheSize()));
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener!=null){
+                    mOnItemClickListener.onclick(v,position);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -69,5 +79,13 @@ public class AppCacheAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public MyViewHold(@NonNull View itemView) {
             super(itemView);
         }
+    }
+
+    public interface OnItemClickListener{
+        void onclick(View view,int position);
+    }
+    OnItemClickListener mOnItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        mOnItemClickListener = onItemClickListener;
     }
 }

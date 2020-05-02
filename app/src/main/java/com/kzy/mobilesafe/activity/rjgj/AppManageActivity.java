@@ -191,6 +191,8 @@ public class AppManageActivity extends Activity implements View.OnClickListener 
                 super.run();
                 mHandler.obtainMessage(LOADING).sendToTarget();
                 mInstallAppsInfo = AppInfoUtil.getAllAppsInfos(getApplicationContext());
+                //造假删除自己应用
+                mInstallAppsInfo.remove(new AppInfoBean(getPackageName()));
                 //分类
                 mInstallSystemAppsInfo.clear();
                 mInstallUserAppsInfo.clear();

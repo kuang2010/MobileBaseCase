@@ -1,19 +1,24 @@
 package com.kzy.mobilesafe.activity.hcql;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.AppOpsManager;
 import android.app.usage.StorageStats;
 import android.app.usage.StorageStatsManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
@@ -23,17 +28,20 @@ import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.adapter.AppCacheAdapter;
@@ -71,6 +79,7 @@ public class AppCacheClearActivity extends Activity {
 
     private List<AppInfoBean> mAppInfoBeans = new ArrayList<>();
     private AppCacheAdapter mAdapter;
+    private ImageView mIv_clear_all_cache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,106 @@ public class AppCacheClearActivity extends Activity {
             startActivityForResult(intent,100);
         }else {
             startScan();
+        }
+
+        initEvent();
+    }
+
+    private void initEvent() {
+        mAdapter.setOnItemClickListener(new AppCacheAdapter.OnItemClickListener() {
+            @Override
+            public void onclick(View view, final int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AppCacheClearActivity.this);
+                builder.setMessage("确定要清除"+mAppInfoBeans.get(position).getAppName()+"的缓存？");
+                builder.setNegativeButton("否",null);
+                builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("tagtag","清除");
+                        //清除单个应用的缓存
+                        clearOneAppCache(mAppInfoBeans.get(position).getPackageName());
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        mIv_clear_all_cache.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //清除所有APP的缓存
+                clearAllAppCache();
+
+            }
+        });
+    }
+
+    /**
+     * 清除所有APP的缓存
+     */
+    private void clearAllAppCache() {
+        // public abstract void freeStorageAndNotify(long freeStorageSize, IPackageDataObserver observer);
+        //java.lang.NoSuchMethodException: freeStorageAndNotify 所以高版本安卓中也做不到的
+        PackageManager mPm = getPackageManager();
+        // 反射
+        try {
+            class ClearCacheObserver extends IPackageDataObserver.Stub {
+                public void onRemoveCompleted(final String packageName, final boolean succeeded) {
+                    //子线程中执行
+                    Log.d("tagtag",""+packageName+","+succeeded);
+
+                }
+            }
+            // 1 . class
+            Class type = mPm.getClass();
+            // 2. method
+            Method method = type.getDeclaredMethod("freeStorageAndNotify", long.class,
+                    IPackageDataObserver.class);
+            //3. mPm
+            //4. invoke
+            method.invoke(mPm, Long.MAX_VALUE,new ClearCacheObserver());
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 清除单个应用的缓存
+     * @param packageName
+     */
+    private void clearOneAppCache(String packageName) {
+        //打开设置中心界面
+//        Intent setting = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
+//        setting.setData(Uri.parse("package:" + packageName));
+//        startActivity(setting);
+
+
+        //deleteApplicationCacheFiles 系统才有的权限android.permission.DELETE_CACHE_FILES
+        //所以做不到删除一个应用的APP
+        PackageManager mPm = getPackageManager();
+        // 反射
+
+        try {
+            class ClearCacheObserver extends IPackageDataObserver.Stub {
+                public void onRemoveCompleted(final String packageName, final boolean succeeded) {
+                    //子线程中执行
+                    Log.d("tagtag",""+packageName+","+succeeded);
+                }
+            }
+            // 1 . class
+            Class type = mPm.getClass();
+            // 2. method
+            Method method = type.getDeclaredMethod("deleteApplicationCacheFiles", String.class,
+                    IPackageDataObserver.class);
+            //3. mPm
+            //4. invoke
+            method.invoke(mPm, packageName,new ClearCacheObserver());
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -154,6 +263,7 @@ public class AppCacheClearActivity extends Activity {
                 for (AppInfoBean appInfoBean:allAppsInfos){
                     count++;
                     progress = Math.round( count*100.0f/allAppsInfos.size());
+                    //获取APP的缓存大小
                     getAppCacheSize(appInfoBean);
                     Message message = mHandler.obtainMessage();
                     message.what = SCANNING;
@@ -166,6 +276,10 @@ public class AppCacheClearActivity extends Activity {
         }.start();
     }
 
+    /**
+     * 获取APP的缓存大小
+     * @param appInfoBean 包名
+     */
     private void getAppCacheSize(AppInfoBean appInfoBean) {
         //android.permission.PACKAGE_USAGE_STATS 权限
         try {
@@ -176,7 +290,8 @@ public class AppCacheClearActivity extends Activity {
                 mSm = (StorageManager) getSystemService(STORAGE_SERVICE);
             }
 
-            UUID uuid = StorageManager.UUID_DEFAULT;//mSm.getUuidForPath(getCacheDir());
+            UUID uuid = mSm.getUuidForPath(getCacheDir());
+            uuid = StorageManager.UUID_DEFAULT;
 
             //通过包名获取uid
             int uid = getUid(appInfoBean.getPackageName());
@@ -231,10 +346,18 @@ public class AppCacheClearActivity extends Activity {
         mTv_scanning_app_cache = findViewById(R.id.tv_scanning_app_cache);
         mPb_scanning_app_cache = findViewById(R.id.pb_scanning_app_cache);
         mRcv_app_cache = findViewById(R.id.rcv_app_cache);
+        mIv_clear_all_cache = findViewById(R.id.iv_clear_all_cache);
         mTv_scan_result_app_cache = findViewById(R.id.tv_scan_result_app_cache);
         mRcv_app_cache.setLayoutManager(new LinearLayoutManager(this));
         mRcv_app_cache.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mAdapter = new AppCacheAdapter(this);
         mRcv_app_cache.setAdapter(mAdapter);
+
+        TextView tv_test1 = findViewById(R.id.tv_scanning_app_cache);
+        TextView tv_test2 = findViewById(R.id.tv_scanning_app_cache);
+        Log.d("tagtag",""+(tv_test1==tv_test2));
+        Log.d("tagtag","tv_test1:"+tv_test1);
+        Log.d("tagtag","tv_test2:"+tv_test2);
+
     }
 }
