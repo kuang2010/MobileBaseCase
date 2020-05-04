@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.kzy.mobilesafe.bean.BlackBean;
+import com.kzy.mobilesafe.dao.AppLockDao;
 import com.kzy.mobilesafe.dao.BlackDao;
 import com.kzy.mobilesafe.db.BlackDb;
 import com.kzy.mobilesafe.dao.TelAddressDao;
@@ -56,5 +57,19 @@ public class ExampleInstrumentedTest {
         String location = TelAddressDao.getLocation("13148814853");
 
         System.out.println("location>>>>"+location);
+    }
+
+
+    @Test
+    public void MyTest4(){
+        String packName = "com.sohu.inputmethod.sogou.x86";
+        Context context = InstrumentationRegistry.getTargetContext();
+        AppLockDao appLockDao = new AppLockDao(context);
+        appLockDao.insert(packName);
+
+//        appLockDao.delete(packName);
+
+        boolean b = appLockDao.queryIsLock(packName);
+        System.out.println("boolean>>>>"+b);
     }
 }

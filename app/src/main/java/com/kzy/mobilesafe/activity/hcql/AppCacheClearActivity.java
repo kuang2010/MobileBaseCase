@@ -72,7 +72,7 @@ public class AppCacheClearActivity extends Activity {
     public static final int SCANFINISH = 3;
     private RotateAnimation mAnimation;
 
-    private int progress;
+    private int progress;//扫描进度
     private PackageManager mPm;
     private StorageStatsManager mSsm;
     private StorageManager mSm;
@@ -80,6 +80,7 @@ public class AppCacheClearActivity extends Activity {
     private List<AppInfoBean> mAppInfoBeans = new ArrayList<>();
     private AppCacheAdapter mAdapter;
     private ImageView mIv_clear_all_cache;
+    private boolean isBreak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,6 +262,9 @@ public class AppCacheClearActivity extends Activity {
                 mHandler.obtainMessage(STARTSCAN).sendToTarget();
                 int count = 0;
                 for (AppInfoBean appInfoBean:allAppsInfos){
+                    if (isBreak){
+                        return;
+                    }
                     count++;
                     progress = Math.round( count*100.0f/allAppsInfos.size());
                     //获取APP的缓存大小
@@ -359,5 +363,14 @@ public class AppCacheClearActivity extends Activity {
         Log.d("tagtag","tv_test1:"+tv_test1);
         Log.d("tagtag","tv_test2:"+tv_test2);
 
+//        获取recycleview item坐标位置对应的position
+//        int position = mRcv_app_cache.getChildAdapterPosition(mRcv_app_cache.findChildViewUnder(x,y))
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        isBreak = true;
+        super.onDestroy();
     }
 }

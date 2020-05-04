@@ -20,6 +20,8 @@ public class AppInfoBean {
     private boolean isCheck;//进程管理中是否被选上了
     private boolean isVirus;//是否是病毒
     private long cacheSize;//产生的文件资源占用缓存空间大小 byte
+    private boolean isLock;//是否加锁
+
     public AppInfoBean(){};
 
     //重写equals和hashcode方便造假删除某个对象
@@ -55,7 +57,17 @@ public class AppInfoBean {
                 ", isCheck=" + isCheck +
                 ", isVirus=" + isVirus +
                 ", cacheSize=" + cacheSize +
+                ", isLock=" + isLock +
                 '}';
+    }
+
+    public boolean isLock() {
+        return isLock;
+
+    }
+
+    public void setLock(boolean lock) {
+        isLock = lock;
     }
 
     public long getCacheSize() {

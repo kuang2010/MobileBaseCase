@@ -12,11 +12,13 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.hcql.AppCacheClearActivity"></activity>
+        <activity android:name=".activity.gjgj.activity.LockActivity"></activity>
+        <activity android:name=".activity.hcql.AppCacheClearActivity" />
         <activity android:name=".activity.bdcs.AntiVirusActivity" />
         <activity android:name=".activity.jcgl.ProcessTaskManagerAcitivity" />
         <activity android:name=".activity.rjgj.AppManageActivity" />
-        <activity android:name=".activity.SplashActivity"
+        <activity
+            android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,8 +43,8 @@
         <activity android:name=".activity.txws.BlackLoadMoreActivity" />
         <activity android:name=".activity.SettingCenterActivity" />
         <activity android:name=".activity.gjgj.AToolHomeActivity" />
-        <activity android:name=".activity.gjgj.TelepAddressQueryActivity" />
-        <activity android:name=".activity.gjgj.ServicePhoneQueryActivity" />
+        <activity android:name=".activity.gjgj.activity.TelepAddressQueryActivity" />
+        <activity android:name=".activity.gjgj.activity.ServicePhoneQueryActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -112,21 +114,19 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 悬浮窗口 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 有权查看使用情况的应用程序 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" /> <!-- 悬浮窗口 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 有权查看使用情况的应用程序 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
 
-    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
-
-    <uses-permission android:name="android.permission.DELETE_CACHE_FILES"/>
+    <uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
 
 </manifest>

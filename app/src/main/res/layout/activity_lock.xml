@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.gjgj.activity.LockActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_bg"
+        android:gravity="center">
+        <CheckBox
+            android:id="@+id/cb_unlock_btn_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:background="@drawable/select_btn_head_lock"
+            android:checked="true"
+            android:text="未加锁"
+            android:textColor="@color/select_text_head_lock"
+            android:gravity="center" />
+        <CheckBox
+            android:id="@+id/cb_lock_btn_head"
+            android:layout_toRightOf="@id/cb_unlock_btn_head"
+            android:layout_width="310px"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:background="@drawable/select_btn_head_lock"
+            android:checked="false"
+            android:text="已加锁"
+            android:textColor="@color/select_text_head_lock"
+            android:gravity="center" />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fl_content_lock"/>
+
+</LinearLayout>

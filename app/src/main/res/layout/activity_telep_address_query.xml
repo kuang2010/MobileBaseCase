@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.gjgj.TelepAddressQueryActivity">
+    tools:context=".activity.gjgj.activity.TelepAddressQueryActivity">
 
     <TextView
         style="@style/setup_title_style"

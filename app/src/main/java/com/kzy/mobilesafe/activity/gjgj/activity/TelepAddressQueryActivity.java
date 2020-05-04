@@ -1,4 +1,4 @@
-package com.kzy.mobilesafe.activity.gjgj;
+package com.kzy.mobilesafe.activity.gjgj.activity;
 
 import android.app.Activity;
 import android.content.Context;

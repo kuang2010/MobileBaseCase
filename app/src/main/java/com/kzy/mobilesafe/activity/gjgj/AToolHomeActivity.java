@@ -10,6 +10,9 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.kzy.mobilesafe.Constant.MyConstants;
 import com.kzy.mobilesafe.R;
+import com.kzy.mobilesafe.activity.gjgj.activity.LockActivity;
+import com.kzy.mobilesafe.activity.gjgj.activity.ServicePhoneQueryActivity;
+import com.kzy.mobilesafe.activity.gjgj.activity.TelepAddressQueryActivity;
 import com.kzy.mobilesafe.dao.TelAddressDao;
 import com.kzy.mobilesafe.utils.EncodeUtils;
 import com.kzy.mobilesafe.view.ToggleView;
@@ -31,6 +34,9 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
     private ToggleView mTgvQueryServicePhoneAtool;
     private ToggleView mTgvSmsBackupAtool;
     private ToggleView mTgvSmsRestoreAtool;
+    private ToggleView mTgv_lock_atool;
+    private ToggleView mTgv_watch_dog1_atool;
+    private ToggleView mTgv_watch_dog2_atool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
         mTgvQueryServicePhoneAtool.setOnClickListener(this);
         mTgvSmsBackupAtool.setOnClickListener(this);
         mTgvSmsRestoreAtool.setOnClickListener(this);
+        mTgv_lock_atool.setOnClickListener(this);
     }
 
     private void initData() {
@@ -61,6 +68,9 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
         mTgvQueryServicePhoneAtool = findViewById(R.id.tgv_query_service_phone_atool);
         mTgvSmsBackupAtool = findViewById(R.id.tgv_sms_backup_atool);
         mTgvSmsRestoreAtool = findViewById(R.id.tgv_sms_restore_atool);
+        mTgv_lock_atool = findViewById(R.id.tgv_lock_atool);
+        mTgv_watch_dog1_atool = findViewById(R.id.tgv_watch_dog1_atool);
+        mTgv_watch_dog2_atool = findViewById(R.id.tgv_watch_dog2_atool);
     }
 
 
@@ -68,10 +78,10 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
     public void onClick(View v) {
         int id = v.getId();
         if (id==R.id.tgv_query_address_atool){
-            Intent intent_addr = new Intent(this,TelepAddressQueryActivity.class);
+            Intent intent_addr = new Intent(this, TelepAddressQueryActivity.class);
             startActivity(intent_addr);
         }else if (id == R.id.tgv_query_service_phone_atool){
-            Intent intent_addr = new Intent(this,ServicePhoneQueryActivity.class);
+            Intent intent_addr = new Intent(this, ServicePhoneQueryActivity.class);
             startActivity(intent_addr);
         }else if (id == R.id.tgv_sms_backup_atool){
             //短信的备份
@@ -111,6 +121,10 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
                 e.printStackTrace();
             }
 
+        }else if (id == R.id.tgv_lock_atool){
+            //程序锁
+            Intent intent = new Intent(this, LockActivity.class);
+            startActivity(intent);
         }
     }
 
