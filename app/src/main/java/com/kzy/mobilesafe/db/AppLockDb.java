@@ -3,6 +3,7 @@ package com.kzy.mobilesafe.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
 /**
@@ -16,6 +17,7 @@ public class AppLockDb extends SQLiteOpenHelper {
     public static final int VERSION = 1;
     public static final String TABLENAME = "lockData";
     public static final String COLUM_PACKAGENAME = "packageName";
+    public static final Uri URI = Uri.parse("content://delete");
 
     public AppLockDb(Context context) {
         super(context, DBNAME, null, VERSION);

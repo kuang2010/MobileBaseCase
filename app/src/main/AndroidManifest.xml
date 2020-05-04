@@ -104,6 +104,10 @@
         <service android:name=".activity.service.BlackInterceptService" />
         <service android:name=".activity.service.ShowPhoneLoactionService" />
         <service android:name=".widget.ClearRunningAppWidgeterService" />
+
+        <provider
+            android:authorities="delete"
+            android:name=".activity.gjgj.MyContentProvider"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

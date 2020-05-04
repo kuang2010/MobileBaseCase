@@ -16,9 +16,10 @@ import com.kzy.mobilesafe.db.AppLockDb;
 public class AppLockDao {
 
     private final AppLockDb mAppLockDb;
+    private Context mContext;
 
     public AppLockDao(Context context) {
-
+        mContext = context;
         mAppLockDb = new AppLockDb(context);
     }
 
@@ -28,12 +29,17 @@ public class AppLockDao {
         values.put(AppLockDb.COLUM_PACKAGENAME,pckName);
         writableDatabase.insert(AppLockDb.TABLENAME,null,values);
         writableDatabase.close();
+
+        mContext.getContentResolver().notifyChange(AppLockDb.URI,null);
+
     }
 
     public void delete(String pckName){
         SQLiteDatabase writableDatabase = mAppLockDb.getWritableDatabase();
         writableDatabase.delete(AppLockDb.TABLENAME,""+AppLockDb.COLUM_PACKAGENAME+"=?",new String[]{pckName});
         writableDatabase.close();
+
+        mContext.getContentResolver().notifyChange(AppLockDb.URI,null);
     }
 
     public boolean queryIsLock(String pckName){

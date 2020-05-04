@@ -1,6 +1,8 @@
 package com.kzy.mobilesafe.activity.gjgj.activity;
 
 import android.app.ProgressDialog;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.activity.gjgj.fragment.BaseLockAnimFragment;
@@ -18,6 +21,7 @@ import com.kzy.mobilesafe.activity.gjgj.fragment.LockFragment;
 import com.kzy.mobilesafe.activity.gjgj.fragment.UnLockFragment;
 import com.kzy.mobilesafe.bean.AppInfoBean;
 import com.kzy.mobilesafe.dao.AppLockDao;
+import com.kzy.mobilesafe.db.AppLockDb;
 import com.kzy.mobilesafe.utils.AppInfoUtil;
 
 import java.util.ArrayList;
@@ -53,6 +57,15 @@ public class LockActivity extends AppCompatActivity implements View.OnClickListe
         mAppLockDao = new AppLockDao(this);
         //由于fragment的生命周期方法会多出重复调用，所以把获取数据放到activity里提供性能
         getDatas();
+
+        ContentObserver observer = new ContentObserver(new Handler()) {
+            @Override
+            public void onChange(boolean selfChange) {
+                super.onChange(selfChange);
+                Toast.makeText(LockActivity.this,"收到一条通知",Toast.LENGTH_SHORT).show();
+            }
+        };
+        getContentResolver().registerContentObserver(AppLockDb.URI,true,observer);
     }
 
     private Handler mHandler = new Handler(){
