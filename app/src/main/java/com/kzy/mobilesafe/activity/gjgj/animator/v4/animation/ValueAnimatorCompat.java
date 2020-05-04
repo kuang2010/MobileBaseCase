@@ -14,24 +14,32 @@
  * limitations under the License.
  */
 
-package com.kzy.mobilesafe.activity.gjgj.animator.animation;
+package com.kzy.mobilesafe.activity.gjgj.animator.v4.animation;
 
+import android.support.annotation.RestrictTo;
 import android.view.View;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
- * A simple interface to do things in animation pulse.
- * <p>
- * Before Honeycomb, it uses a simple Handler to mimic animation callback.
- * <p>
- * This is only a minimal implementation which is why this class is hidden.
+ * Compatibility implementation for {@code android.animation.ValueAnimator}.
+ *
+ * @hide
  */
-interface AnimatorProvider {
+@RestrictTo(GROUP_ID)
+public interface ValueAnimatorCompat {
 
-    /**
-     * Provides a simple ValueAnimator w/o any start or end values. It provides the same
-     * Animator callback interface.
-     */
-    ValueAnimatorCompat emptyValueAnimator();
+    public void setTarget(View view);
 
-    void clearInterpolator(View view);
+    public void addListener(AnimatorListenerCompat listener);
+
+    public void setDuration(long duration);
+
+    public void start();
+
+    public void cancel();
+
+    void addUpdateListener(AnimatorUpdateListenerCompat animatorUpdateListener);
+
+    public float getAnimatedFraction();
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kzy.mobilesafe.activity.gjgj.animator.animation;
+package com.kzy.mobilesafe.activity.gjgj.animator.v4.animation;
 
 import android.support.annotation.RestrictTo;
 

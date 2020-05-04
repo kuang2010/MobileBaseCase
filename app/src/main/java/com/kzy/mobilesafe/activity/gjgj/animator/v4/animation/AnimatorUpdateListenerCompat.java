@@ -14,32 +14,28 @@
  * limitations under the License.
  */
 
-package com.kzy.mobilesafe.activity.gjgj.animator.animation;
+package com.kzy.mobilesafe.activity.gjgj.animator.v4.animation;
 
 import android.support.annotation.RestrictTo;
-import android.view.View;
 
 import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
- * Compatibility implementation for {@code android.animation.ValueAnimator}.
+ * Implementors of this interface can add themselves as update listeners
+ * to a <code>ValueAnimator</code> instance to receive callbacks on every animation
+ * frame, after the current frame's values have been calculated for that
+ * <code>ValueAnimator</code>.
  *
  * @hide
  */
 @RestrictTo(GROUP_ID)
-public interface ValueAnimatorCompat {
+public interface AnimatorUpdateListenerCompat {
 
-    public void setTarget(View view);
+    /**
+     * <p>Notifies the occurrence of another frame of the animation.</p>
+     *
+     * @param animation The animation which was repeated.
+     */
+    void onAnimationUpdate(ValueAnimatorCompat animation);
 
-    public void addListener(AnimatorListenerCompat listener);
-
-    public void setDuration(long duration);
-
-    public void start();
-
-    public void cancel();
-
-    void addUpdateListener(AnimatorUpdateListenerCompat animatorUpdateListener);
-
-    public float getAnimatedFraction();
 }

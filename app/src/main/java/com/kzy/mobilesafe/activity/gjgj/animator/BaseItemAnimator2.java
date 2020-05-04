@@ -24,7 +24,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 
-import com.kzy.mobilesafe.activity.gjgj.animator.animation.AnimatorCompatHelper;
+import com.kzy.mobilesafe.activity.gjgj.animator.v4.animation.AnimatorCompatHelper;
 
 import java.util.ArrayList;
 import java.util.List;
