@@ -18,4 +18,5 @@ public interface MyConstants {
     String LOCATIONSTYLESELECTPOS = "location_style_select_pos";
     int LOCATIONDEFOULTINDX = 0;
     byte ximing = 66;
+    String PACKAGENAME = "packageName";
 }

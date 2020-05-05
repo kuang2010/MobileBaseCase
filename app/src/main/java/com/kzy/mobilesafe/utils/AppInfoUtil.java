@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -101,7 +102,8 @@ public class AppInfoUtil {
         List<AppInfoBean> appInfoBeans = new ArrayList<>();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         UsageStatsManager um = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-        List<UsageStats> usageStats = um.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY, System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000, System.currentTimeMillis());
+        //开始时间和结束时间的设置，在这个时间范围内 获取栈顶Activity 有效
+        List<UsageStats> usageStats = um.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY, System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000, System.currentTimeMillis());//获取一周前到现在期间的堆栈信息
         for (UsageStats us: usageStats){
             String packageName = us.getPackageName();
             try {
@@ -178,6 +180,21 @@ public class AppInfoUtil {
         return availMem;
     }
 
+    /**
+     * 判断  用户查看使用情况的权利是否给予app
+     * @return
+     */
+    public static boolean isUsagestatsGranted(Context context) {
+        long ts = System.currentTimeMillis();
+        UsageStatsManager usageStatsManager = (UsageStatsManager) context.getApplicationContext()
+                .getSystemService("usagestats");
+        List<UsageStats> queryUsageStats = usageStatsManager.queryUsageStats(
+                UsageStatsManager.INTERVAL_BEST, 0, ts);
+        if (queryUsageStats == null || queryUsageStats.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 判断APP是否有某种权限，适于所有版本的安卓

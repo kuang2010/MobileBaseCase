@@ -66,7 +66,7 @@ public class ProcessTaskManagerAcitivity extends Activity implements View.OnClic
         tools:ignore="ProtectedPermissions" />
         * */
         if (isNoOption()){
-            if (!isOnSwitch()){
+            if (!AppInfoUtil.isUsagestatsGranted(this)){
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                 startActivity(intent);
                 finish();
@@ -88,21 +88,6 @@ public class ProcessTaskManagerAcitivity extends Activity implements View.OnClic
     }
 
 
-    /**
-     * 判断有权查看使用情况的应用程序的权限是否开启
-     * @return
-     */
-    private boolean isOnSwitch() {
-        long ts = System.currentTimeMillis();
-        UsageStatsManager usageStatsManager = (UsageStatsManager) getApplicationContext()
-                .getSystemService("usagestats");
-        List<UsageStats> queryUsageStats = usageStatsManager.queryUsageStats(
-                UsageStatsManager.INTERVAL_BEST, 0, ts);
-        if (queryUsageStats == null || queryUsageStats.isEmpty()) {
-            return false;
-        }
-        return true;
-    }
 
     private void initEnvent() {
         mIv_clean_run_app.setOnClickListener(this);

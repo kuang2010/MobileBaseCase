@@ -52,7 +52,7 @@ public class BlackInterceptService extends Service {
     }
 
 
-    //前台服务通知
+    //开启前台服务通知,提高服务级别
     private void startPrority() {
 
         Intent intent = new Intent();

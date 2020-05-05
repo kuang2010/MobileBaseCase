@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:textColor="#333333"
-        app:text="看门狗1"
+        app:text="看门狗(Accessibility)"
         app:bgselector="middle"
         app:togglevisible="true"/>
     <com.kzy.mobilesafe.view.ToggleView
@@ -71,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:textColor="#333333"
-        app:text="看门狗2"
+        app:text="看门狗(Thread)"
         app:bgselector="last"
         app:togglevisible="true"/>
 </LinearLayout>

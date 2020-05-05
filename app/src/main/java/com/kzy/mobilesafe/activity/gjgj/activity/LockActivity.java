@@ -57,15 +57,6 @@ public class LockActivity extends AppCompatActivity implements View.OnClickListe
         mAppLockDao = new AppLockDao(this);
         //由于fragment的生命周期方法会多出重复调用，所以把获取数据放到activity里提供性能
         getDatas();
-
-        ContentObserver observer = new ContentObserver(new Handler()) {
-            @Override
-            public void onChange(boolean selfChange) {
-                super.onChange(selfChange);
-                Toast.makeText(LockActivity.this,"收到一条通知",Toast.LENGTH_SHORT).show();
-            }
-        };
-        getContentResolver().registerContentObserver(AppLockDb.URI,true,observer);
     }
 
     private Handler mHandler = new Handler(){

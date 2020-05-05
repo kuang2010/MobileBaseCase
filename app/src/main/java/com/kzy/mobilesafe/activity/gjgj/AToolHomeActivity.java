@@ -2,10 +2,13 @@ package com.kzy.mobilesafe.activity.gjgj;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.kzy.mobilesafe.Constant.MyConstants;
@@ -13,8 +16,11 @@ import com.kzy.mobilesafe.R;
 import com.kzy.mobilesafe.activity.gjgj.activity.LockActivity;
 import com.kzy.mobilesafe.activity.gjgj.activity.ServicePhoneQueryActivity;
 import com.kzy.mobilesafe.activity.gjgj.activity.TelepAddressQueryActivity;
+import com.kzy.mobilesafe.activity.service.WatchDog2Service;
 import com.kzy.mobilesafe.dao.TelAddressDao;
+import com.kzy.mobilesafe.db.AppLockDb;
 import com.kzy.mobilesafe.utils.EncodeUtils;
+import com.kzy.mobilesafe.utils.ServiceUtil;
 import com.kzy.mobilesafe.view.ToggleView;
 
 import java.io.BufferedReader;
@@ -53,6 +59,24 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
         mTgvSmsBackupAtool.setOnClickListener(this);
         mTgvSmsRestoreAtool.setOnClickListener(this);
         mTgv_lock_atool.setOnClickListener(this);
+        ToggleView.OnToggleStateChangeListener onToggleStateChangeListener = new ToggleView.OnToggleStateChangeListener() {
+            @Override
+            public void onToggleStateChange(View view, boolean open) {
+                if (view == mTgv_watch_dog1_atool){
+                    Toast.makeText(AToolHomeActivity.this,"使用手机辅助功能无障碍",Toast.LENGTH_SHORT).show();
+                }else if (view == mTgv_watch_dog2_atool){
+                    if (open){
+                        Intent openService = new Intent(AToolHomeActivity.this, WatchDog2Service.class);
+                        startService(openService);
+                    }else {
+                        Intent closeService = new Intent(AToolHomeActivity.this,WatchDog2Service.class);
+                        stopService(closeService);
+                    }
+                }
+            }
+        };
+        mTgv_watch_dog1_atool.setOnToggleStateChangeListener(onToggleStateChangeListener);
+        mTgv_watch_dog2_atool.setOnToggleStateChangeListener(onToggleStateChangeListener);
     }
 
     private void initData() {
@@ -61,6 +85,7 @@ public class AToolHomeActivity extends Activity implements View.OnClickListener 
 
         Log.d("location","location:"+location);
 
+        mTgv_watch_dog2_atool.setToggleState(ServiceUtil.isSerivceRunning(this,"com.kzy.mobilesafe.activity.service.WatchDog2Service"));
     }
 
     private void initView() {

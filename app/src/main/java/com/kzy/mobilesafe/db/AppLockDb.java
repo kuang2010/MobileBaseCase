@@ -17,7 +17,9 @@ public class AppLockDb extends SQLiteOpenHelper {
     public static final int VERSION = 1;
     public static final String TABLENAME = "lockData";
     public static final String COLUM_PACKAGENAME = "packageName";
-    public static final Uri URI = Uri.parse("content://delete");
+    public static final Uri URI_LOCK = Uri.parse("content://applock/lock");
+    public static final Uri URI_UNLOCK = Uri.parse("content://applock/unlock");
+
 
     public AppLockDb(Context context) {
         super(context, DBNAME, null, VERSION);

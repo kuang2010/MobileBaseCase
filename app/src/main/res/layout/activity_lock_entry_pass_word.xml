@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.gjgj.activity.LockEntryPassWordActivity">
+
+    <TextView
+        style="@style/setup_title_style"
+        android:text="程序锁"/>
+
+    <ImageView
+        android:id="@+id/iv_lock_app_icon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_changfangxing"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <EditText
+            android:id="@+id/et_pwd_lock_app"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请求输入密码123"
+            android:inputType="numberPassword"/>
+        <Button
+            android:id="@+id/btn_entry_lock_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:background="@drawable/selector_dialog_btn_bg"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
