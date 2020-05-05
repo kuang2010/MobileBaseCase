@@ -36,7 +36,7 @@ public class MobileApplication extends Application {
             public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
                 //未捕获的异常
                 StringBuilder sb = PhoneUtil.getDeviceTypeInfo();
-                sb.append(e.toString());//这个错误信息里没有包含具体哪行代码出错了
+                sb.append(e.toString());//缺点这个错误信息里没有包含具体哪行代码出错了!!!
                 boolean permissionGranted = PackageManager.PERMISSION_GRANTED==ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 if (permissionGranted){
                     try {
