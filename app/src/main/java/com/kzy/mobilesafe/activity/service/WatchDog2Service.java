@@ -162,7 +162,7 @@ public class WatchDog2Service extends Service {
 
                 Log.d("tagtag","topPackageName:"+topPackageName);
                 //判断包名是不是在加锁数据库列表里
-                if (mList !=null&& mList.contains(topPackageName)){
+                if (mList !=null&& mList.contains(topPackageName)||"com.android.settings".equals(topPackageName)){
                     //加锁了
                     //弹出密码输入页面
                     if (topPackageName.equals(WHITEPACKENAM)){
@@ -171,6 +171,7 @@ public class WatchDog2Service extends Service {
                     }
                     Intent intent = new Intent(WatchDog2Service.this, LockEntryPassWordActivity.class);
                     intent.putExtra(MyConstants.PACKAGENAME,topPackageName);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
                 }
@@ -207,6 +208,7 @@ public class WatchDog2Service extends Service {
     private boolean checkUseStage() {
         if (!AppInfoUtil.isUsagestatsGranted(this)){
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             return false;
         }
