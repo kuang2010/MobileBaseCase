@@ -34,6 +34,7 @@ import com.kzy.mobilesafe.activity.txws.BlackActivity;
 import com.kzy.mobilesafe.activity.txws.BlackLoadMoreActivity;
 import com.kzy.mobilesafe.adapter.HomeFunctionAdapter;
 import com.kzy.mobilesafe.bean.FuntionBean;
+import com.kzy.mobilesafe.utils.AppInfoUtil;
 import com.kzy.mobilesafe.utils.Md5Util;
 import com.kzy.mobilesafe.utils.SpUtil;
 
@@ -116,6 +117,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     case 6://缓存清理
                         Intent intent_cache = new Intent(HomeActivity.this, AppCacheClearActivity.class);
                         startActivity(intent_cache);
+                        break;
+
+                    case 4://
+                        int a = 30/0;
                         break;
                 }
             }

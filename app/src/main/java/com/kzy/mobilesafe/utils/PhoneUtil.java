@@ -6,10 +6,12 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.media.audiofx.PresetReverb;
+import android.os.Build;
 import android.os.Environment;
 import android.text.format.Formatter;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -83,5 +85,26 @@ public class PhoneUtil {
 //        ResolveInfo resolveInfo = resolveInfos.get(0);
 //        ApplicationInfo appInfo = resolveInfo.activityInfo.applicationInfo;
         return resolveInfos.size()>0;
+    }
+
+
+    /**
+     * 获取手机型号信息
+     * @return
+     */
+    public static StringBuilder getDeviceTypeInfo(){
+        StringBuilder sb = new StringBuilder();
+        try{
+            Class<Build> clazz = Build.class;
+            Field[] declaredFields = clazz.getDeclaredFields();
+            for (Field field:declaredFields){
+                String name = field.getName();
+                String value = (String) field.get(null);
+                sb.append(name+":" + value + "\n");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sb;
     }
 }

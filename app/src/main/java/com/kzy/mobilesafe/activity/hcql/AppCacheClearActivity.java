@@ -91,7 +91,7 @@ public class AppCacheClearActivity extends Activity {
         int myUid = Process.myUid();
         int callingUid = Binder.getCallingUid();
         //获取其他APP的缓存大小需要开启了android.permission.PACKAGE_USAGE_STATS 权限
-        boolean granted = AppInfoUtil.isPermissionGranted(this,43);//OP_GET_USAGE_STATS
+        boolean granted = AppInfoUtil.isUsagestatsGranted(this);//OP_GET_USAGE_STATS
         if (!granted){
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivityForResult(intent,100);
@@ -203,7 +203,7 @@ public class AppCacheClearActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode==100){
-            boolean granted = AppInfoUtil.isPermissionGranted(this,43);//OP_GET_USAGE_STATS
+            boolean granted = AppInfoUtil.isUsagestatsGranted(this);//OP_GET_USAGE_STATS
             if (granted){
                 startScan();
             }

@@ -182,6 +182,7 @@ public class AppInfoUtil {
 
     /**
      * 判断  用户查看使用情况的权利是否给予app
+     * android.permission.PACKAGE_USAGE_STATS
      * @return
      */
     public static boolean isUsagestatsGranted(Context context) {
@@ -202,8 +203,10 @@ public class AppInfoUtil {
      * @param context
      * @param permissionCode AppOpsManager里对应权限的常量值
      * @return
+     *
+     * @deprecated 有问题不能用
      */
-    public static boolean isPermissionGranted(Context context,int permissionCode) {
+    public static boolean xxxisPermissionGranted(Context context,int permissionCode) {
         try {
             AppOpsManager object = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
             if (object == null) {
