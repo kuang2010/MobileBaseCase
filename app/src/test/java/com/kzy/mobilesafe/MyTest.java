@@ -96,4 +96,14 @@ public class MyTest {
             System.out.println("\t|- " + me.getKey() + "-->" + me.getValue()) ;
         }
     }
+
+    @Test
+    public void test4(){
+        for (;;) {
+            System.out.println("test4test4test4test4test4");
+            if (true){
+//                return;
+            }
+        }
+    }
 }

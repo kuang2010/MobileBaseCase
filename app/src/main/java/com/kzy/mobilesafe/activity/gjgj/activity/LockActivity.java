@@ -74,7 +74,7 @@ public class LockActivity extends AppCompatActivity implements View.OnClickListe
                     if (dialog!=null && dialog.isShowing()){
                         dialog.dismiss();
                     }
-                    mLockFragment.setDatasAndRefreshUi(lockAppInfoBeans);
+                    mLockFragment.setDatasAndRefreshUi(lockAppInfoBeans);//fragment不建议用setData方法
                     mUnLockFragment.setDatasAndRefreshUi(unLockAppInfoBeans);
                     mCb_lock_btn_head.setChecked(false);
                     mCb_unlock_btn_head.setChecked(true);
