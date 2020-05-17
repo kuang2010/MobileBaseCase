@@ -158,6 +158,7 @@ public class BaseLockAnimFragment extends Fragment {
 
     public void setDatasAndRefreshUi(List<AppInfoBean> appInfoBeans) {
         mAppInfoBeans = appInfoBeans;
+        Log.d("setDatasAndRefreshUi","mAdapter:"+mAdapter);
         if (mAdapter!=null){
             mAdapter.setDatas(mAppInfoBeans);
         }

@@ -5,7 +5,9 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -108,6 +110,7 @@ public class LockActivity extends AppCompatActivity implements View.OnClickListe
                         unLockAppInfoBeans.add(appInfoBean);
                     }
                 }
+                SystemClock.sleep(10000);
                 mHandler.obtainMessage(FINISH).sendToTarget();
             }
         }.start();
@@ -148,11 +151,31 @@ public class LockActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private BaseLockAnimFragment lastShowFragment;
     private void selectFragment(BaseLockAnimFragment lockFragment) {
         FragmentTransaction fragmentTransaction = mSupportFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fl_content_lock,lockFragment,lockFragment.getClass().getName());
-        fragmentTransaction.commit();
+//        fragmentTransaction.replace(R.id.fl_content_lock,lockFragment,lockFragment.getClass().getName());
+//        fragmentTransaction.add(R.id.fl_content_lock,lockFragment,lockFragment.getClass().getName());
+//        fragmentTransaction.commit();
 
+        if (lastShowFragment!=null){
+            fragmentTransaction.hide(lastShowFragment);
+        }
+        Fragment fragmentByTag = mSupportFragmentManager.findFragmentByTag(lockFragment.getClass().getName());
+
+        if (fragmentByTag==null){
+
+            fragmentTransaction.add(R.id.fl_content_lock,lockFragment,lockFragment.getClass().getName());
+
+        }else {
+
+            fragmentTransaction.show(fragmentByTag);
+        }
+
+        lastShowFragment = lockFragment;
+
+        fragmentTransaction.commitAllowingStateLoss();
+        mSupportFragmentManager.executePendingTransactions();
     }
 
     public void lock(AppInfoBean clickAppInfoBean, int position) {
