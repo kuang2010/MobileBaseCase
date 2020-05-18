@@ -174,6 +174,7 @@ public class LockActivity extends AppCompatActivity implements View.OnClickListe
 
         lastShowFragment = lockFragment;
 
+        //fragmentTransaction.addToBackStack(null);//将FragmentTransaction加入回退栈中,以便后期使用getSupportFragmentManager().popBackStack()移除回退栈中的fragment
         fragmentTransaction.commitAllowingStateLoss();
         mSupportFragmentManager.executePendingTransactions();
     }
