@@ -89,7 +89,7 @@ public class PhoneUtil {
 
 
     /**
-     * 获取手机型号信息
+     * 反射求出手机机型信息
      * @return
      */
     public static StringBuilder getDeviceTypeInfo(){

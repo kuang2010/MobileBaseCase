@@ -126,7 +126,7 @@ public class BlackInterceptService extends Service {
             //1. class
             Class clazz = Class.forName("android.os.ServiceManager");
             //2. method
-            Method method = clazz.getDeclaredMethod("getService", String.class);
+            Method method = clazz.getDeclaredMethod("getService", String.class);//int.class == Integer.TYPE,  boolean.class == Boolean.TYPE
             //3. call
             IBinder iBinder = (IBinder) method.invoke(null, TELEPHONY_SERVICE);
 
