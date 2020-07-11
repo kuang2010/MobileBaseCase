@@ -128,7 +128,7 @@ public class BlackInterceptService extends Service {
             //2. method
             Method method = clazz.getDeclaredMethod("getService", String.class);//int.class == Integer.TYPE,  boolean.class == Boolean.TYPE
             //3. call
-            IBinder iBinder = (IBinder) method.invoke(null, TELEPHONY_SERVICE);
+            IBinder iBinder = (IBinder) method.invoke(null, TELEPHONY_SERVICE);//obj=null因为getService是个静态方法
 
             //4. aidl 将ibinder 转成可调用的对象
             ITelephony iTelephony = ITelephony.Stub.asInterface(iBinder);

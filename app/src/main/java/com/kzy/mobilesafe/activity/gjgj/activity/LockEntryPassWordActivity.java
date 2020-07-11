@@ -120,6 +120,7 @@ public class LockEntryPassWordActivity extends Activity {
             </intent-filter>
 		 */
         Intent main = new Intent("android.intent.action.MAIN");
+        main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         main.addCategory("android.intent.category.HOME");
         main.addCategory("android.intent.category.DEFAULT");
         main.addCategory("android.intent.category.MONKEY");
