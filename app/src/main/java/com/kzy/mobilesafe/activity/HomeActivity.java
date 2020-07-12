@@ -140,7 +140,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void showEnterPwdDialog(final boolean isSetPwd) {
-        AlertDialog.Builder ab =new AlertDialog.Builder(this);
+        AlertDialog.Builder ab =new AlertDialog.Builder(this);//AlertDialog时APP主题不能用android:Theme.Light.xxx
         View view_dialog = View.inflate(this, R.layout.dialog_setpwd_home, null);
         ab.setView(view_dialog);
         final AlertDialog dialog = ab.create();
