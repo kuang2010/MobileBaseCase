@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"><!-- android:Theme.Light.NoTitleBar 对AlertDialog的样式有影响-->
         <!-- Customize your theme here. -->
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -11,7 +11,10 @@
         <!-- Customize your theme here. -->
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:background">@drawable/splash_bg</item>
+        <item name="android:background">@drawable/bg_lanch</item>
+        <!--android:background会影响页面里控件的背景-->
+     <!--   <item name="android:windowBackground">@drawable/bg_lanch</item>-->
+        <!--android:windowBackground 底部导航栏会影响启动背景，所以还是用android:background-->
     </style>
 
     <style name="SplashThemeNoBg" parent="Theme.AppCompat.Light.NoActionBar">

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/bg_color_splash" />
+
+    <!--width/height = 图片的宽高比-->
+    <item  android:width="210dp" android:height="118dp"
+        android:gravity="bottom|center_horizontal"
+        android:bottom="30dp">
+
+        <bitmap
+            android:gravity="fill|center"
+            android:src="@drawable/splashb"
+            />
+
+
+       <!--
+
+       android:scaleType="centerCrop"
+       android:gravity="bottom"
+       android:tileMode="disabled"
+       -->
+    </item>
+
+</layer-list>
